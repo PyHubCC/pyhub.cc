@@ -29,7 +29,7 @@ class HomeHandler(BaseHandler):
         self.redirect("/")
 
 def main():
-    http_server = tornado.httpserver.HTTPServer(Application())
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 
