@@ -13,7 +13,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
-            (r'web_hook/coding_git', WebHookHandler)
+            (r'/eb_hook/coding_git', WebHookHandler)
                     ]
         settings = dict(
             template_path=_ROOT_JOIN('templates'),
