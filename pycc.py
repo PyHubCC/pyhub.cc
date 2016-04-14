@@ -11,7 +11,10 @@ define("port", default=8080, type=int)
 
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [(r'/', HomeHandler)]
+        handlers = [
+            (r'/', HomeHandler),
+            (r'web_hook/coding_git', WebHookHandler)
+                    ]
         settings = dict(
             template_path=_ROOT_JOIN('templates'),
             debug=True
@@ -27,6 +30,11 @@ class HomeHandler(BaseHandler):
         self.render("home.html", title='PyHub.cc')
     def post(self, *args, **kwargs):
         self.redirect("/")
+class WebHookHandler(BaseHandler):
+    def post(self, *args, **kwargs):
+        if self.request.headers.get('X-Coding-Event') == 'push':
+            print("Execute git pull")
+
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
