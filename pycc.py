@@ -3,6 +3,7 @@ import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
 import os.path
+import subprocess
 
 _ROOT = os.path.dirname(__file__)
 _ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
@@ -13,7 +14,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
-            (r'/eb_hook/coding_git', WebHookHandler)
+            (r'/web_hook/coding_git', WebHookHandler)
                     ]
         settings = dict(
             template_path=_ROOT_JOIN('templates'),
@@ -34,6 +35,7 @@ class WebHookHandler(BaseHandler):
     def post(self, *args, **kwargs):
         if self.request.headers.get('X-Coding-Event') == 'push':
             print("Execute git pull")
+            subprocess.call("git pull", shell=True)
 
 
 def main():
