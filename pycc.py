@@ -36,6 +36,8 @@ class WebHookHandler(BaseHandler):
         if self.request.headers.get('X-Coding-Event') == 'push':
             print("Execute git pull")
             subprocess.call("git pull", shell=True)
+        else:
+            print(self.request.headers.get('X-Coding-Event'))
 
 
 def main():
