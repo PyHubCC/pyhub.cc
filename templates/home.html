@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="http://taobaocdn.image.alimmdn.com/snake.ico?t=1460637381054">
+  <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.6.1/css/amazeui.min.css
+"/>
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="am-g">
+    <h1>{{ title }}</h1>
+  </div>
+  <hr />
+</div>
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    <h3>Coming <i class="am-icon-spinner am-icon-pulse"></i></h3>
+    <hr>
+    <div class="am-btn-group">
+      <a href="/" disabled="disabled" class="am-btn am-btn-secondary am-btn-sm"><i class="am-icon-github am-icon-sm" ></i> Github</a>
+    </div>
+    <hr>
+    <img src="http://taobaocdn.image.alimmdn.com/pyHub.jpg?t=1460638393364" width="200px" height="200px" />
+    <p>© 2016 PyHub.cc</p>
+    <section data-am-widget="mechat" class="am-mechat am-mechat-default"  data-am-mechat-unitid="12417">
+      <div id="mechat"></div>
+    </section>
+
+  </div>
+</div>
+<script type='text/javascript'>
+    (function(m, ei, q, i, a, j, s) {
+        m[a] = m[a] || function() {
+            (m[a].a = m[a].a || []).push(arguments)
+        };
+        j = ei.createElement(q),
+            s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = i + '?v=' + new Date().getUTCDate();
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '//eco-api.meiqia.com/dist/meiqia.js', '_MEIQIA');
+    _MEIQIA('entId', 12417);
+</script>
+</body>
+</html>
