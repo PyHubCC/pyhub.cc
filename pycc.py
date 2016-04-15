@@ -15,6 +15,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/', HomeHandler),
             (r'/web_hook/coding_git', WebHookHandler),
+            (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
         ]
         settings = dict(
@@ -37,11 +38,15 @@ class WebHookHandler(BaseHandler):
         if self.request.headers.get('X-Coding-Event') == 'push':
             print("Execute git pull")
             subprocess.call("git pull", shell=True)
+        if self.request.headers.get('X-GitHub-Event') == 'push':
+            print("Execute git pull github master")
+            subprocess.call("git pull github master", shell=True)
         else:
             print(self.request.headers.get('X-Coding-Event'))
+            self.write("Bye")
 class OAuthGitHubHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        print("Under development!")
+        self.write("Under development!")
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
