@@ -44,6 +44,8 @@ class WebHookHandler(BaseHandler):
         else:
             print(self.request.headers.get('X-Coding-Event'))
             self.write("Bye")
+    def get(self, *args, **kwargs):
+        self.write("What're u looking 4?")
 class OAuthGitHubHandler(BaseHandler):
     def get(self, *args, **kwargs):
         self.write("Under development!")
