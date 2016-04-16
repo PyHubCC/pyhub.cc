@@ -1,9 +1,11 @@
+from __future__ import absolute_import
 import tornado.web
 import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
 import os.path
 import subprocess
+from _config import ENV
 
 _ROOT = os.path.dirname(__file__)
 _ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
@@ -52,7 +54,7 @@ class OAuthGitHubHandler(BaseHandler):
         self.write("Under development!")
 
 def main():
-    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(ENV == 'pub'))
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 
