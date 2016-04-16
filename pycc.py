@@ -20,6 +20,7 @@ class Application(tornado.web.Application):
         ]
         settings = dict(
             template_path=_ROOT_JOIN('templates'),
+            static_path=_ROOT_JOIN('static'),
             debug=True
         )
         super(Application, self).__init__(handlers=handlers, **settings)
