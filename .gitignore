@@ -4,3 +4,4 @@ config.ini
 _config.py
 __pycache__/
 db/
+upload.sh
