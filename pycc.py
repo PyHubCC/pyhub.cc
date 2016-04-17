@@ -1,18 +1,15 @@
 from __future__ import absolute_import
-import tornado.web
+
 import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
-import os.path
 import subprocess
 from _config import ENV
-
-_ROOT = os.path.dirname(__file__)
-_ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
+from base import BaseApplication
 
 define("port", default=8080, type=int)
 
-class Application(tornado.web.Application):
+class Application(BaseApplication):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
@@ -20,22 +17,19 @@ class Application(tornado.web.Application):
             (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
         ]
-        settings = dict(
-            template_path=_ROOT_JOIN('templates'),
-            static_path=_ROOT_JOIN('static'),
-            debug=True
-        )
-        super(Application, self).__init__(handlers=handlers, **settings)
-
-
+        super(Application, self).__init__(handlers)
 class BaseHandler(tornado.web.RequestHandler):
     pass
 
+# '/' => Home page
 class HomeHandler(BaseHandler):
     def get(self):
         self.render("home.html", title='PyHub.cc')
     def post(self, *args, **kwargs):
         self.redirect("/")
+
+# '/web_hook/github_push'
+# '/web_hook/coding_git' => Webhooks
 class WebHookHandler(BaseHandler):
     def post(self, *args, **kwargs):
         if self.request.headers.get('X-Coding-Event') == 'push':
@@ -49,6 +43,8 @@ class WebHookHandler(BaseHandler):
             self.write("Bye")
     def get(self, *args, **kwargs):
         self.write("What're u looking 4?")
+
+# '/oauth/github' => login with GitHub
 class OAuthGitHubHandler(BaseHandler):
     def get(self, *args, **kwargs):
         self.write("Under development!")
@@ -57,6 +53,5 @@ def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(ENV == 'pub'))
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
-
 if __name__ == '__main__':
     main()
