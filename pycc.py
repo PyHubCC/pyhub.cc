@@ -4,7 +4,7 @@ import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
 import subprocess
-from _config import ENV
+from _config import Env
 from base import BaseApplication
 
 define("port", default=8080, type=int)
@@ -50,7 +50,7 @@ class OAuthGitHubHandler(BaseHandler):
         self.write("Under development!")
 
 def main():
-    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(ENV == 'pub'))
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 if __name__ == '__main__':

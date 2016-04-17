@@ -1,5 +1,10 @@
 import os
 import tornado.web
+from _config import Env
+import motor.motor_tornado
+import logging
+
+
 
 __all__ = ['BaseApplication']
 _ROOT = os.path.dirname(__file__)
@@ -13,3 +18,8 @@ class BaseApplication(tornado.web.Application):
             debug=True
         )
         super(BaseApplication, self).__init__(handlers=handlers, **settings)
+        self._client = motor.motor_tornado.MotorClient()
+        self.db = self._client[Env.DB_NAME]
+        logging.info("test db {}".format(self.db.collection_names))
+        print("{}".format(self.db.collection_names()))
+

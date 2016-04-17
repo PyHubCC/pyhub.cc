@@ -3,3 +3,4 @@ venv3/
 config.ini
 _config.py
 __pycache__/
+db/
