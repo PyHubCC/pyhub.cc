@@ -61,6 +61,7 @@ class APIPost(BaseController):
             via:
         }
         """
+        print(self.request.body.decode())
         if self.request.headers.get('POST_KEY') == self.settings['POST_KEY']:
             data = json.loads(self.request.body.decode())
             data = self.make_link(data)
