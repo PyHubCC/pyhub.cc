@@ -10,6 +10,7 @@ class BaseController(tornado.web.RequestHandler):
             date:
             link:
             via:
+            public:
         }
         """
         link = dict(
@@ -17,6 +18,7 @@ class BaseController(tornado.web.RequestHandler):
             thumb = '',
             author = '',
             rank   = 1,
+            public = True,
         )
         link.update(data)
         return link
