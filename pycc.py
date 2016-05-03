@@ -61,13 +61,16 @@ class APIPost(BaseController):
             via:
         }
         """
-        data = json.loads(self.request.body.decode())
-        data = self.make_link(data)
-        res = await self.application.db.save_link(data)
-        if bool(res):
-            self.write(dict(status=0))
+        if self.request.headers.get('POST_KEY') == self.settings['POST_KEY']:
+            data = json.loads(self.request.body.decode())
+            data = self.make_link(data)
+            res = await self.application.db.save_link(data)
+            if bool(res):
+                self.write(dict(status=0))
+            else:
+                self.write(dict(status=-1))
         else:
-            self.write(dict(status=-1))
+            self.write("Bye~")
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))
