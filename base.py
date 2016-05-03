@@ -28,8 +28,8 @@ class BaseApplication(tornado.web.Application):
             template_path=ROOT_JOIN('templates'),
             static_path=ROOT_JOIN('static'),
             debug=True,
-            POST_KEY=Env.POST_KEY
         )
+        settings.update({'X-Spider-Key': Env.POST_KEY})
         super(BaseApplication, self).__init__(handlers=handlers, **settings)
         self.db = DB()
 
