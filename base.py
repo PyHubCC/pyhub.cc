@@ -17,11 +17,12 @@ class DB:
         query = dict(
             public = True,
         )
-        res = {'count': 0, 'links': []}
-        res['count'] = await self.link_collection.find(query).count()
+        # res = {'count': 0, 'links': []}
+        # res['count'] = await self.link_collection.find(query).count()
+        links = []
         async for link in self.link_collection.find(query).sort('date').limit(page_size).skip((page_no-1)*page_size):
-            res['links'].append(link)
-        return res
+            links.append(link)
+        return links
 
     async def find_link_by_title(self, title):
         return await self.link_collection.find_one({'title': title})

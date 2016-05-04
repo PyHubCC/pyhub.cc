@@ -10,6 +10,8 @@ from controller import BaseController
 from controller.helper import WebHookHandler
 from controller.api import APIPost
 
+import json
+
 define("port", default=8080, type=int)
 
 class Application(BaseApplication):
@@ -27,7 +29,7 @@ class Application(BaseApplication):
 class HomeHandler(BaseController):
     async def get(self):
         res = await self.application.db.get_links()
-        self.render("home.html", title='PyHub.cc', links=res['links'], count=res['count'])
+        self.render("home.html", title='PyHub.cc', links=res)
     def post(self, *args, **kwargs):
         self.redirect("/")
 
@@ -40,7 +42,7 @@ class ShareHandler(BaseController):
         if page_no <= 0:
             self.redirect("/share/1")
         res = await self.application.db.get_links(page_no=page_no)
-        self.render("home.html", title='PyHub.cc', links=res['links'], count=res['count'])
+        self.render("home.html", title='PyHub.cc', links=res)
 
 # '/oauth/github' => login with GitHub
 class OAuthGitHubHandler(BaseController):

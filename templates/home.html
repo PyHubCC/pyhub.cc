@@ -1,54 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
-  <title>{{title}}</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="{{ static_url('snake.ico') }}">
-  <link href="https://cdn.bootcss.com/amazeui/2.5.2/css/amazeui.min.css" rel="stylesheet">
-  <style>
-    .header {
-      text-align: center;
-    }
-    .header h1 {
-      font-size: 200%;
-      color: #333;
-      margin-top: 30px;
-    }
-    .header p {
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="{{ static_url('snake.ico') }}" />
+    <link href="https://cdn.bootcss.com/amazeui/2.5.2/css/amazeui.min.css" rel="stylesheet" />
 </head>
 <body>
-<div class="header">
-  <div class="am-g">
-    <ul class="am-nav am-nav-pills am-nav-justify">
-        <li class="am-active"><a href="#">首页</a></li>
-        <li><a href="#">开始使用</a></li>
-        <li><a href="#">按需定制</a></li>
-        <li><a href="#">加入我们</a></li>
-    </ul>
-  </div>
-</div>
-<div class="am-g">
-  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-    <ul class="am-list">
-        {% for link in links %}
-      <li class="am-g am-list-item-dated">
-          <a href="{{ link['link'] }}" class="am-list-item-hd" target="_blank">
-              {{ link['title'] }}
-          </a>
-          <span class="am-list-date">
-              {{ datetime.datetime.fromtimestamp(link['date']).strftime('%Y-%m-%d') }}
-          </span>
-      </li>
-        {% end %}
-    </ul>
+    <app></app>
+
+    <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script>
+    <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+    <script>
+        riot.mount('app', {
+            title: 'PyHub.cc',
+            links: [{% for link in links %} {title: "{{link['title']}}"}, {% end %}],
+        });
+    </script>
     <p>© 2016 PyHub.cc</p>
 </body>
 </html>
