@@ -2,7 +2,7 @@
 <!-- layout -->
   <h3>{ opts.title }</h3>
   <ul>
-    // <li each={ items }> { title } </li>
+    <li each={ items }> </li>
   </ul>
 
   // logic comes here
