@@ -9,9 +9,13 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="alternate icon" type="image/png" href="{{ static_url('snake.ico') }}" />
-    <link href="https://cdn.bootcss.com/amazeui/2.5.2/css/amazeui.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.bootcss.com/materialize/0.97.5/css/materialize.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/materialize/0.97.5/js/materialize.min.js"></script>
 </head>
 <body>
+
     <app></app>
 
     <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script>
@@ -19,9 +23,8 @@
     <script>
         riot.mount('app', {
             title: 'PyHub.cc',
-            links: [{% for link in links %} {title: "{{link['title']}}"}, {% end %}],
+            links: [{% for link in links %}{title: "{{link['title']}}", link: "{{link['link']}}"}, {% end %}],
         });
     </script>
-    <p>© 2016 PyHub.cc</p>
 </body>
 </html>
