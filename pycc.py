@@ -18,6 +18,7 @@ class Application(BaseApplication):
         handlers = [
             (r'/', HomeHandler),
             (r'/u/(\w+)', UserPage),
+            (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
@@ -75,6 +76,11 @@ class OAuthGitHubHandler(BaseController):
                 self.redirect("/")
             else:
                 self.write("授权失败!".format(access_token))
+# '/logout' => Logout action
+class LogoutHandler(BaseController):
+    def get(self, *args, **kwargs):
+        self.clear_all_cookies()
+        self.redirect("/")
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))
