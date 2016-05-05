@@ -17,6 +17,7 @@ class Application(BaseApplication):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
+            (r'/u/(\w+)', UserPage),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
@@ -27,10 +28,27 @@ class Application(BaseApplication):
 # '/' => Home page
 class HomeHandler(BaseController):
     async def get(self):
+        nick = self.get_secure_cookie('nick')
+        uid  = self.get_secure_cookie('uid')
+        github_url = self.application.github.login_url
         res = await self.application.db.get_links()
-        self.render("home.html", title='PyHub.cc', links=res, json=JSONEncoder().encode(res))
+
+        render_data = dict(
+            title='PyHub.cc',
+            login_url=github_url,
+            json=JSONEncoder().encode(res),
+            nick=nick,
+            uid = uid
+        )
+
+        self.render("home.html", **render_data)
+
     def post(self, *args, **kwargs):
         self.redirect("/")
+# '/u/uid' => User Page
+class UserPage(BaseController):
+    def get(self, uid):
+        self.write("Comming..."+uid)
 
 # '/share/page_no' => Share page
 class ShareHandler(BaseController):
@@ -41,8 +59,22 @@ class ShareHandler(BaseController):
 
 # '/oauth/github' => login with GitHub
 class OAuthGitHubHandler(BaseController):
-    def get(self, *args, **kwargs):
-        self.write("Under development!")
+    async def get(self, *args, **kwargs):
+        code = self.get_argument('code')
+        if not code:
+            self.redirect("/")
+        else:
+            access_token = self.application.github.access_token(code)
+            if access_token.get('access_token'):
+                # get user info
+                user = self.application.github.get_user(access_token.get('access_token'))
+                user = self.make_user(user)
+                await self.application.db.save_user(user)
+                self.set_secure_cookie('nick', user['nick'])
+                self.set_secure_cookie('uid', user['uid'])
+                self.redirect("/")
+            else:
+                self.write("授权失败!".format(access_token))
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))

@@ -27,14 +27,22 @@
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">登录</a>
+          {% if not uid %}
+          <a class="mdl-navigation__link" href="{{ login_url }}">登录</a>
+          {% else %}
+          <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
+          {% end %}
       </nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">{{ title }}</span>
     <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="">登录</a>
+          {% if not uid %}
+          <a class="mdl-navigation__link" href="{{ login_url }}">登录</a>
+          {% else %}
+          <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
+          {% end %}
     </nav>
   </div>
     <main class="mdl-layout__content">
