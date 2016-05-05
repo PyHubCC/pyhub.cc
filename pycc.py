@@ -7,10 +7,9 @@ from _config import Env
 from base import BaseApplication
 
 from controller import BaseController
-from controller.helper import WebHookHandler
+from controller.helper import WebHookHandler, JSONEncoder
 from controller.api import APIPost
 
-import json
 
 define("port", default=8080, type=int)
 
@@ -29,7 +28,7 @@ class Application(BaseApplication):
 class HomeHandler(BaseController):
     async def get(self):
         res = await self.application.db.get_links()
-        self.render("home.html", title='PyHub.cc', links=res)
+        self.render("home.html", title='PyHub.cc', links=res, json=JSONEncoder().encode(res))
     def post(self, *args, **kwargs):
         self.redirect("/")
 

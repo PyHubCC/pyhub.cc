@@ -1,3 +1,11 @@
 a {
     text-decoration: none;
 }
+*, body, h6{
+    font-family:-apple-system,Arial,Microsoft YaHei,Helvetica Neue,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+}
+.card-wide.mdl-card {
+  min-height: 60px;
+}

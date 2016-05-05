@@ -7,9 +7,6 @@
     <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
-        riot.mount('app', {
-            title: 'PyHub.cc',
-            links: [{% for link in links %}{title: "{{link['title']}}", link: "{{link['link']}}", abs: "{{link['abstract']}}"}, {% end %}],
-        });
+        riot.mount('app', {links: JSON.parse('{% raw json %}')})
     </script>
 {% end %}
