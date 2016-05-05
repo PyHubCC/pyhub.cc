@@ -3,6 +3,7 @@ import tornado.web
 from _config import Env
 import motor.motor_tornado
 from controller.helper import GitHub
+from bson import objectid
 
 __all__ = ['BaseApplication']
 _ROOT = os.path.dirname(__file__)
@@ -14,6 +15,18 @@ class DB:
         self.db = self._client[Env.DB_NAME]
         self.link_collection = self.db[Env.COL_LINK]
         self.user_collection = self.db[Env.COL_USER]
+
+    async def get_link_by_id(self, link_id):
+        return await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)})
+    async def fav_link(self, link_id, uid):
+        exist = await self.get_link_by_id(link_id)
+        if bool(exist):
+            # update fav list
+            await self.link_collection.update({'_id': objectid.ObjectId(link_id)},
+                                              {'$inc': {'favs': 1},
+                                               '$push': {'favlist': uid}})
+            await self.user_collection.update({'uid': uid},
+                                              {'$push': {'favlist': link_id}})
 
     async def get_user(self, uid):
         return await self.user_collection.find_one({'uid': uid})

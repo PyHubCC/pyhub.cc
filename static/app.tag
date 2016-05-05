@@ -14,8 +14,8 @@
                     </p>
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        <i class="material-icons">favorite_border</i>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
+                        <i class="material-icons">{ is_faved() }</i>
                     </a>
                     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                       { via }
@@ -42,14 +42,37 @@
   this.page_no = opts.page_no;
   this.items = opts.links;
   this.load_more = function(e){
-    self = this;
+    var self = this;
     this.page_no += 1;
     $.post('/share/' + this.page_no,{},function(json){
-      data = JSON.parse(json);
+      var data = JSON.parse(json);
       for (record of data){
         self.items.push(record);
       }
       self.update();
     })
+  }
+  this.vote = function(){
+    if (opts.uid === undefined) {
+      alert('请先登录！');
+    }
+    var self = this;
+    var link_id = this._id;
+    var favlist = this.favlist;
+    if (favlist != undefined && favlist.indexOf(opts.uid) >= 0) {
+      alert('已收藏！')
+    } else {
+      $.post('/fav/'+link_id, {}, function(json){
+        if (favlist === undefined) {
+          self.favlist = [opts.uid];
+        } else {
+          self.favlist.append(opts.uid);
+        }
+        self.update();
+      })
+    }
+  }
+  this.is_faved = function() {
+    return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
   }
 </app>

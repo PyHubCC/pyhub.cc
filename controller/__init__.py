@@ -2,7 +2,22 @@ import tornado.web
 from urllib.parse import urlparse
 from datetime import datetime
 class BaseController(tornado.web.RequestHandler):
+    FLASH_KEY = 'FL'
 
+
+    def auth(self, method):
+        if self.get_secure_cookie('uid'):
+            return method
+        else:
+            self.flash_msg('Login first please!')
+            self.redirect('/')
+    def flash_msg(self, msg=''):
+        if bool(msg):
+            self.set_secure_cookie(self.FLASH_KEY, msg)
+        else:
+            msg = self.get_secure_cookie(self.FLASH_KEY)
+            self.clear_cookie(self.FLASH_KEY)
+            return msg
     def make_link(self, data):
         """
         data format: {
@@ -20,6 +35,8 @@ class BaseController(tornado.web.RequestHandler):
             author = '',
             rank   = 1,
             public = True,
+            favs = 1,
+            favlist = [],
         )
         link.update(data)
         return link

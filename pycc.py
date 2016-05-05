@@ -13,11 +13,13 @@ from controller.api import APIPost
 
 define("port", default=8080, type=int)
 
+
 class Application(BaseApplication):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
             (r'/u/(\w+)', UserPage),
+            (r'/fav/(\w+)', FavHandler),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
@@ -28,7 +30,13 @@ class Application(BaseApplication):
         super(Application, self).__init__(handlers)
 # '/' => Home page
 class HomeHandler(BaseController):
+    def fake_login(self):
+        self.set_secure_cookie('nick', 'Yushneng')
+        self.set_secure_cookie('uid', 'rainyear')
+
     async def get(self):
+        # self.fake_login()
+
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
         github_url = self.application.github.login_url
@@ -81,6 +89,23 @@ class LogoutHandler(BaseController):
     def get(self, *args, **kwargs):
         self.clear_all_cookies()
         self.redirect("/")
+
+# '/fav/link_id' => Fav action
+class FavHandler(BaseController):
+
+    def get(self, link_id):
+        pass
+    async def post(self, link_id):
+
+        uid = self.get_secure_cookie('uid')
+        if not uid:
+            self.write(JSONEncoder().encode({'status': 403}))
+        else:
+            # update vote
+            await self.application.db.fav_link(link_id, uid)
+            self.write(JSONEncoder().encode({'status': 200}))
+
+
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))

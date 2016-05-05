@@ -28,6 +28,8 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId) or isinstance(o, bool):
             return str(o)
+        if isinstance(o, bytes):
+            return o.decode()
         return json.JSONEncoder.default(self, o)
 class GitHub(object):
     AUTH_API = 'https://github.com/login/oauth/authorize?'
