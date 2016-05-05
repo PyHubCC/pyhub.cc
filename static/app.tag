@@ -66,7 +66,7 @@
         if (favlist === undefined) {
           self.favlist = [opts.uid];
         } else {
-          self.favlist.append(opts.uid);
+          self.favlist.push(opts.uid);
         }
         self.update();
       })

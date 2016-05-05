@@ -41,7 +41,7 @@ class DB:
         # res = {'count': 0, 'links': []}
         # res['count'] = await self.link_collection.find(query).count()
         links = []
-        async for link in self.link_collection.find(query).sort('date').limit(page_size).skip((page_no-1)*page_size):
+        async for link in self.link_collection.find(query).sort('rank', -1).limit(page_size).skip((page_no-1)*page_size):
             links.append(link)
         return links
 
