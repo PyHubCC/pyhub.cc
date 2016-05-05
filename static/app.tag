@@ -30,12 +30,20 @@
         </button>
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <div class="page-content mdl-list">
+        <img src="/static/join.png" class="mdl-cell mdl-cell--10-col"/>
+      </div>
+    </div>
 </div>
 
 <footer class="mdl-mini-footer">
   <div class="mdl-mini-footer__left-section">
-    <div class="mdl-logo">© pyhub.cc 2016</div>
+    <div class="mdl-logo">PyHub.cc</div>
+    <ul class="mdl-mini-footer__link-list">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy & Terms</a></li>
+    </ul>
   </div>
 </footer>
   // logic comes here
