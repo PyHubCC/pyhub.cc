@@ -7,6 +7,9 @@
     <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
-        riot.mount('app', {links: JSON.parse('{% raw json %}')})
+        riot.mount('app', {
+            links: JSON.parse('{% raw json %}'),
+            page_no: 0,
+        })
     </script>
 {% end %}

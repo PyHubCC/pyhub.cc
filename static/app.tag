@@ -2,9 +2,8 @@
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--2-col"></div>
     <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-        <div class="page-content">
+      <div class="page-content">
         <!-- Your content goes here -->
-
         <ul class="mdl-list">
             <li each={ items } class="mdl-list__item">
             <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
@@ -23,9 +22,13 @@
                     </a>
                 </div>
             </div>
+            </li>
         </ul>
-
-        </div>
+        <!-- Raised button with ripple -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick={ load_more }>
+            加载更多
+        </button>
+      </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col"></div>
 </div>
@@ -36,5 +39,17 @@
   </div>
 </footer>
   // logic comes here
-  this.items = opts.links
+  this.page_no = opts.page_no;
+  this.items = opts.links;
+  this.load_more = function(e){
+    self = this;
+    this.page_no += 1;
+    $.post('/share/' + this.page_no,{},function(json){
+      data = JSON.parse(json);
+      for (record of data){
+        self.items.push(record);
+      }
+      self.update();
+    })
+  }
 </app>

@@ -34,14 +34,10 @@ class HomeHandler(BaseController):
 
 # '/share/page_no' => Share page
 class ShareHandler(BaseController):
-    async def get(self, page_no):
-        if len(page_no) == 0:
-            self.redirect("/")
+    async def post(self, page_no):
         page_no = int(page_no)
-        if page_no <= 0:
-            self.redirect("/share/1")
         res = await self.application.db.get_links(page_no=page_no)
-        self.render("home.html", title='PyHub.cc', links=res)
+        self.write(JSONEncoder().encode(res))
 
 # '/oauth/github' => login with GitHub
 class OAuthGitHubHandler(BaseController):
