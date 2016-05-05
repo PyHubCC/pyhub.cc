@@ -35,7 +35,7 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('uid', 'rainyear')
 
     async def get(self):
-        self.fake_login()
+        # self.fake_login()
 
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
