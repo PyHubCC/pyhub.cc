@@ -15,7 +15,7 @@
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
                     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
-                        <i class="material-icons">{ is_faved() }</i>
+                        <i class="material-icons">{ is_faved() }</i> { favs }
                     </a>
                     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                       { via }
