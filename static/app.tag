@@ -1,47 +1,35 @@
 <app>
-  <div class="navbar-fixed">
-    <nav class="teal accent-4 ">
-    <div class="container">
-      <div class="nav-wrapper">
-        <a href="/" class="brand-logo">{ opts.title }</a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/">登录</a></li>
-          <li><a href="/">注册</a></li>
-        </ul>
-      </div>
-    </div>
-    </nav>
-  </div>
-<!-- layout -->
-  <div class="container">
-    <ul class="collection">
-        <li each={ items } class="collection-item">
-            <a href="{ link }"> <span class="title">{ title } </span></a>
-        </li>
-    </ul>
-  </div>
-  <footer class="page-footer teal accent-4">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">敬请期待</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">GitHub</h5>
-                <ul>
-                  <li><a class="grey-text text-lighten-3" href="https://github.com/rainyear">Author</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © 2016 Copyright PyHub
-            </div>
-          </div>
-        </footer>
+<style>
+.card-wide.mdl-card {
+  width: 800px;
+  min-height: 60px;
+}
+</style>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+        <div class="page-content">
+        <!-- Your content goes here -->
 
+        <ul class="mdl-list">
+            <li each={ items } class="mdl-list__item">
+            <div class="card-wide mdl-card mdl-shadow--4dp">
+                <div class="mdl-card__supporting-text">
+                    <a href="{ link }" >{title}</a>
+                </div>
+            </div>
+        </ul>
+
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col"></div>
+</div>
+
+<footer class="mdl-mini-footer">
+  <div class="mdl-mini-footer__left-section">
+    <div class="mdl-logo">© pyhub.cc 2016</div>
+  </div>
+</footer>
   // logic comes here
   this.items = opts.links
 </app>
