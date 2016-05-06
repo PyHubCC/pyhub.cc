@@ -76,7 +76,7 @@
       alert('已收藏！');
       self.update();
     } else {
-      $.post('/fav/'+link_id, {}, function(json){
+      $.post('/act/'+link_id, {'action': 'FAV'}, function(json){
         if (favlist === undefined) {
           self.favlist = [opts.uid];
         } else {
