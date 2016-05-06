@@ -20,6 +20,9 @@
                     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                       { via }
                     </a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" show={ admin } onclick={ unpublic }>
+                      <i class="material-icons" >delete_forever</i>
+                    </a>
                 </div>
             </div>
             </li>
@@ -47,6 +50,7 @@
   </div>
 </footer>
   // logic comes here
+  this.admin = opts.admin;
   this.page_no = opts.page_no;
   this.items = opts.links;
   this.load_more = function(e){
@@ -85,5 +89,13 @@
   }
   this.is_faved = function() {
     return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
+  }
+  this.unpublic = function(e) {
+    if(confirm('DELETE '+ this.title +'?')){
+      var self = this;
+      $.post('/act/'+self._id, {'action': 'DEL'}, function(json){
+        window.location = window.location.href;
+      })
+    }
   }
 </app>

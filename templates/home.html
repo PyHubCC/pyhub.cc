@@ -10,6 +10,7 @@
         riot.mount('app', {
             links: JSON.parse('{% raw json %}'),
             page_no: 1,
+            admin: {{ admin }},
             uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
     </script>

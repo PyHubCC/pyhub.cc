@@ -5,6 +5,8 @@ class BaseController(tornado.web.RequestHandler):
     FLASH_KEY = 'FL'
 
 
+    def is_admin(self, uid):
+        return int(uid is not None and uid.decode() == self.application.settings.get('admin_user'))
     def auth(self, method):
         if self.get_secure_cookie('uid'):
             return method

@@ -19,13 +19,14 @@ class Application(BaseApplication):
         handlers = [
             (r'/', HomeHandler),
             (r'/u/(\w+)', UserPage),
-            (r'/fav/(\w+)', FavHandler),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
             (r'/api/v1/post_data', APIPost),
+            (r'/fav/(\w+)', FavHandler),
+            (r'/act/(\w+)', FavHandler),
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
@@ -47,7 +48,8 @@ class HomeHandler(BaseController):
             login_url=github_url,
             json=JSONEncoder().encode(res),
             nick=nick,
-            uid = uid
+            uid = uid,
+            admin = self.is_admin(uid)
         )
 
         self.render("home.html", **render_data)
@@ -91,21 +93,22 @@ class LogoutHandler(BaseController):
         self.redirect("/")
 
 # '/fav/link_id' => Fav action
+# '/act/link_id' => Action
 class FavHandler(BaseController):
 
-    def get(self, link_id):
-        pass
     async def post(self, link_id):
-
         uid = self.get_secure_cookie('uid')
         if isinstance(uid, bytes):
             uid = uid.decode()
         if not uid:
             self.write(JSONEncoder().encode({'status': 403}))
-        else:
-            # update vote
+
+        action = self.get_body_argument('action')
+        if action == 'FAV':
             await self.application.db.fav_link(link_id, uid)
-            self.write(JSONEncoder().encode({'status': 200}))
+        elif action == 'DEL':
+            await self.application.db.del_link(link_id)
+        self.write(JSONEncoder().encode({'status': 200}))
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))
