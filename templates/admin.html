@@ -1,0 +1,13 @@
+{% extends "base.html"  %}
+
+{% block content %}
+
+    <admin></admin>
+
+    <script type="riot/tag" src="{{ static_url('admin.tag') }}" ></script>
+    <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+    <script>
+        riot.mount('admin', {
+        })
+    </script>
+{% end %}

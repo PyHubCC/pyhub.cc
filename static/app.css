@@ -9,3 +9,9 @@ a {
 .card-wide.mdl-card {
   min-height: 60px;
 }
+.card-join-pyhub {
+  background: url('/static/join.png') center / cover;
+}
+.card-join-pyhub-wrap {
+  padding-top: 32px;
+}

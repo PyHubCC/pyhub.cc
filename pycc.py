@@ -9,6 +9,7 @@ from base import BaseApplication
 from controller import BaseController
 from controller.helper import WebHookHandler, JSONEncoder
 from controller.api import APIPost
+from controller.admin import AdminController
 
 
 define("port", default=8080, type=int)
@@ -27,6 +28,7 @@ class Application(BaseApplication):
             (r'/api/v1/post_data', APIPost),
             (r'/fav/(\w+)', FavHandler),
             (r'/act/(\w+)', FavHandler),
+            (r'/admin', AdminController)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
@@ -49,7 +51,7 @@ class HomeHandler(BaseController):
             json=JSONEncoder().encode(res),
             nick=nick,
             uid = uid,
-            admin = self.is_admin(uid)
+            admin = self.is_admin()
         )
 
         self.render("home.html", **render_data)

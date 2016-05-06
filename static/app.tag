@@ -34,8 +34,32 @@
       </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
-      <div class="page-content mdl-list">
-        <img src="/static/join.png" class="mdl-cell mdl-cell--10-col"/>
+      <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
+        <div class="card-join-pyhub mdl-card">
+        </div>
+      </div>
+      <div class="page-content mdl-list mdl-cell--10-col">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title mdl-card--expand">
+            <h2 class="mdl-card__title-text"><i class="material-icons">event</i> Update</h2>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              View Updates
+            </a>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              View Updates
+            </a>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              View Updates
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
 </div>
