@@ -19,6 +19,7 @@ class APIPost(BaseController):
         if self.request.headers.get('X-Spider-Key') == self.settings['X-Spider-Key']:
             body = self.request.body.decode()
             body = re.sub(r'\s', '', body)
+            print(body)
 
             data = json.loads(body)
             data = self.make_link(data)
