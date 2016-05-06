@@ -60,15 +60,17 @@
       self.update();
     })
   }
-  this.vote = function(){
+  this.vote = function(e){
     if (opts.uid === undefined) {
       alert('请先登录！');
     }
+    e.preventUpdate = true; // Why this???
     var self = this;
-    var link_id = this._id;
-    var favlist = this.favlist;
+    var link_id = self._id;
+    var favlist = self.favlist;
     if (favlist != undefined && favlist.indexOf(opts.uid) >= 0) {
-      alert('已收藏！')
+      alert('已收藏！');
+      self.update();
     } else {
       $.post('/fav/'+link_id, {}, function(json){
         if (favlist === undefined) {
@@ -76,9 +78,10 @@
         } else {
           self.favlist.push(opts.uid);
         }
+        self.favs += 1;
         self.update();
       })
-    }
+    };
   }
   this.is_faved = function() {
     return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
