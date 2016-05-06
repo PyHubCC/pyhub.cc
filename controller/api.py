@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import re
 
 from . import BaseController
 import json
@@ -16,8 +17,10 @@ class APIPost(BaseController):
         }
         """
         if self.request.headers.get('X-Spider-Key') == self.settings['X-Spider-Key']:
-            print(self.request.body.decode())
-            data = json.loads(self.request.body.decode())
+            body = self.request.body.decode()
+            body = re.sub(r'\s', '', body)
+
+            data = json.loads(body)
             data = self.make_link(data)
             res = await self.application.db.save_link(data)
             if bool(res):
