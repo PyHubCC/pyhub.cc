@@ -53,7 +53,7 @@ class BaseController(tornado.web.RequestHandler):
         """
         return dict(
             uid = user.get('login'),
-            nick = user.get('name'),
+            nick = user.get('name') or user.get('login'),
             avatar = user.get('avatar_url'),
             email = user.get('email'),
             admin= 0,
