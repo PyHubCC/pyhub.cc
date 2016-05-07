@@ -26,9 +26,9 @@ class Application(BaseApplication):
             (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
             (r'/api/v1/post_data', APIPost),
-            (r'/fav/(\w+)', FavHandler),
             (r'/act/(\w+)', FavHandler),
-            (r'/admin', AdminController)
+            (r'/admin', AdminController),
+            (r'/new', NewHandler)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
@@ -38,7 +38,7 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('uid', 'rainyear')
 
     async def get(self):
-        # self.fake_login()
+        self.fake_login()
 
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
@@ -115,6 +115,44 @@ class FavHandler(BaseController):
         elif action == 'DEL':
             await self.application.db.del_link(link_id)
         self.write(JSONEncoder().encode({'status': 200}))
+
+class NewHandler(BaseController):
+    def get(self, *args, **kwargs):
+        nick = self.get_secure_cookie('nick')
+        uid  = self.get_secure_cookie('uid')
+        github_url = self.application.github.login_url
+        render_data = dict(
+            title = '分享 Python 链接',
+            uid   = uid,
+            nick = nick,
+            login_url= github_url
+        )
+        self.render("create.html", **render_data)
+    async def post(self, *args, **kwargs):
+        uid = self.get_secure_cookie('uid')
+        if isinstance(uid, bytes):
+            uid = uid.decode()
+        if not uid:
+            self.write(JSONEncoder().encode({'status': 403}))
+
+        link = self.get_body_argument('link')
+        title = self.get_body_argument('title')
+        abstract = self.get_body_argument('abstract')
+
+        if len(link)*len(title)*len(abstract) == 0:
+            self.write(JSONEncoder().encode({'status': 0}))
+        else:
+            data = self.make_link(dict(
+                link = link,
+                title = title,
+                abstract = abstract,
+                author = self.get_secure_cookie('nick').decode()
+            ))
+            success = await self.application.db.save_link(data)
+            if not success:
+                self.write(JSONEncoder().encode({'status': 302, 'msg': 'existed!'}))
+            else:
+                self.write(JSONEncoder().encode({'status': 200, 'link': link}))
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))

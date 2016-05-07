@@ -1,0 +1,116 @@
+{% extends "base.html"  %}
+
+
+{% block backhome %}
+<a href="/"
+  <span class="mdl-layout-title"><i class="material-icons">home</i></span>
+</a>
+/
+{% end %}
+{% block content %}
+    <create-form></create-form>
+    <script type="riot/tag">
+      <create-form>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col"></div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Welcome:</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <form>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="input_link" name="input_link" required>
+                    <label class="mdl-textfield__label" for="input_link">Link...<label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="input_title" name="input_title" required>
+                    <label class="mdl-textfield__label" for="input_title">Title...<label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" type="text" rows="3" id="input_abstract" name="input_abstract" required></textarea>
+                    <label class="mdl-textfield__label" for="input_abstract">Abstract...</label>
+                  </div>
+                </form>
+
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <!-- Accent-colored raised button -->
+                <p>
+                  <div show={ loading } id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                </p>
+                <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
+                  返回首页
+                </a>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
+                  清除
+                </button>
+                <button onclick={submit} class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled={ loading }>
+                  提交
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--2-col"></div>
+        </div>
+        <style>
+          .mdl-card__actions{
+            text-align: center;
+          }
+          form {padding: 24px;}
+          #p1 ,.mdl-textfield {width: 100%;}
+        </style>
+
+        // logic
+        this.loading = false;
+        this.clear = function(e){
+          // e.preventUpdate = true;
+          this.input_link.value = "";
+          this.input_title.value = "";
+          this.input_abstract.value = "";
+          this.loading = false;
+          this.update();
+        }
+        this.submit = function(e){
+            var link = this.input_link.value,
+                title = this.input_title.value,
+                abstract = this.input_abstract.value;
+          if (link.match(/^[a-zA-Z]+:\/\//) === null) {
+            alert("请输入正确的链接！");
+            return;
+          }
+          if (abstract.length == 0 || abstract.length >= 140){
+            alert("摘要字数限制 0~140！");
+            return;
+          }
+          if (title.length == 0 || title.length >= 140) {
+            alert("标题字数限制 0~140！");
+          }
+            this.loading = true;
+            var self = this;
+            $.post('/new', {link: link, title: title, abstract: abstract}, function(json){
+              json = JSON.parse(json);
+              console.log(json);
+              if (json.status == 200){
+                alert("提交成功，感谢您的分享！");
+                self.clear(e);
+              } else if(json.status == 403 ){
+                alert("请先登录！");
+              } else if(json.status == 302){
+                alert("链接已存在，请勿重复提交！");
+                self.clear(e);
+              }else{
+                alert("出现错误，请稍后再试！");
+                self.loading = false;
+                self.update();
+              }
+            })
+        }
+      </create-form>
+    </script>
+    <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+    <script>
+      riot.mount('create-form', {})
+    </script>
+{% end %}

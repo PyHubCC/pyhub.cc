@@ -73,6 +73,7 @@ class DB:
         """
         API use
         """
+        print("Insert {}".format(data))
         if len(data['title']) == 0:
             return False
         exist = await self.find_link_by_title(data['title'])

@@ -1,5 +1,39 @@
 {% extends "base.html"  %}
 
+{% block tabs%}
+<!-- Tabs -->
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+  <a href="#overview" class="mdl-layout__tab is-active">分享</a>
+  <a href="#features" class="mdl-layout__tab">今日推荐</a>
+  <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent mdl-layout--large-screen-only" id="add">
+    <i class="material-icons" role="presentation">add</i>
+    <span class="visuallyhidden">Add</span>
+  </button>
+</div>
+
+<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<script>
+(function() {
+  'use strict';
+  var snackbarContainer = document.querySelector('#demo-toast-example');
+  var showToastButton = document.querySelector('#add');
+  showToastButton.addEventListener('click', function() {
+    'use strict';
+    var uid = {% if uid %} '{{uid}}' {% else %} undefined {% end %};
+    if (!uid) {
+      var data = {message: '请先登录！'};
+      snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    } else {
+      window.location = window.location.origin + '/new';
+    }
+  });
+}());
+</script>
+{% end %}
+
 {% block content %}
 
     <app></app>

@@ -18,3 +18,40 @@ a {
 .pythoners{
   font-size: 1.5em;
 }
+
+.mdl-demo .mdl-layout__tab-bar-button {
+  display: none;
+}
+.mdl-demo .mdl-layout.is-small-screen .mdl-layout__tab-bar .mdl-button {
+  display: none;
+}
+.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar,
+.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar-container {
+  overflow: visible;
+}
+.mdl-layout__tab-bar-container {
+  overflow: visible;
+}
+.mdl-demo .mdl-layout__tab-bar-container {
+  height: 45px;
+}
+.mdl-demo .mdl-layout__tab-bar {
+  padding: 0;
+  padding-left: 45px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
+  height: 45px;
+  line-height: 45px;
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
+  height: 4px;
+}
+.mdl-demo #add {
+  position: absolute;
+  right: 40px;
+  top: 23px;
+  z-index: 999;
+}

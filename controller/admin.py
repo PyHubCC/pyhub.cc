@@ -13,6 +13,6 @@ class AdminController(BaseController):
             title = 'PyHub Admin',
             uid   = uid,
             nick = nick,
-            github_url = github_url
+            login_url= github_url
         )
         self.render("admin.html", **render_data)

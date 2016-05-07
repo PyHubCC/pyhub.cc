@@ -35,7 +35,7 @@ class BaseController(tornado.web.RequestHandler):
         link = dict(
             host = urlparse(data['link']).netloc,
             thumb = '',
-            author = '',
+            author = '雨神',
             rank   = 1,
             public = True,
             favs = 1,

@@ -18,9 +18,11 @@
 </head>
 <body>
 <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
+<div class="mdl-demo mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
     <div class="mdl-layout__header-row">
+      {% block backhome %}
+      {% end %}
       <!-- Title -->
       <span class="mdl-layout-title">{{ title }}</span>
       <!-- Add spacer, to align navigation to the right -->
@@ -31,16 +33,19 @@
           <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
           {% else %}
           <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
-          <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+          <button id="menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">more_vert</i>
           </button>
           <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-              for="demo-menu-lower-right">
+              for="menu-lower-right">
             <li class="mdl-menu__item"><a href='/logout'>登出</a></li>
           </ul>
           {% end %}
       </nav>
     </div>
+    {% block tabs%}
+    {% end %}
+
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">{{ title }}</span>
@@ -53,14 +58,14 @@
           {% end %}
     </nav>
   </div>
-    <main class="mdl-layout__content">
-        <div class="page-content">
-    <!-- Your content goes here -->
-            {% block content %}
-            {% end %}
-        </div>
-    </main>
-  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <!-- Your content goes here -->
+      {% block content %}
+      {% end %}
+    </div>
+  </main>
+</div>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
