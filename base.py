@@ -22,11 +22,17 @@ class DB:
     def date(self):
         return datetime.today().strftime("%m/%d")
 
+    async def get_top_users(self, n=10):
+        users=[]
+        async for u in self.user_collection.find({}).sort('date', 1).limit(n):
+            users.append(u)
+        return users
+
     async def save_event(self, msg):
         await self.event_collection.insert({'msg': msg, 'timestamp': int(time.time()), 'date': self.date})
     async def get_events(self):
         events = []
-        async for e in self.event_collection.find({}).sort('timestamp', 1).limit(3):
+        async for e in self.event_collection.find({}).sort('timestamp', -1).limit(3):
             events.append(e)
         return events
     async def get_link_by_id(self, link_id):

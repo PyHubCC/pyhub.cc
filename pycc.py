@@ -45,6 +45,7 @@ class HomeHandler(BaseController):
         github_url = self.application.github.login_url
         res = await self.application.db.get_links()
         events = await self.application.db.get_events()
+        users = await self.application.db.get_top_users()
 
         render_data = dict(
             title='PyHub.cc',
@@ -53,7 +54,8 @@ class HomeHandler(BaseController):
             nick=nick,
             uid = uid,
             admin = self.is_admin(),
-            events=JSONEncoder().encode(events)
+            events=JSONEncoder().encode(events),
+            users=JSONEncoder().encode(users)
         )
 
         self.render("home.html", **render_data)

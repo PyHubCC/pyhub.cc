@@ -8,7 +8,7 @@
             <li each={ items } class="mdl-list__item">
             <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
                 <div class="mdl-card__supporting-text">
-                    <a href="{ link }" ><h6>{title}</h6></a>
+                    <a href="{ link }" target="_blank"><h6>{title}</h6></a>
                     <p>
                         {abstract}
                     </p>
@@ -56,6 +56,18 @@
           </div>
         </div>
 
+        <div class="page-content mdl-list mdl-cell--10-col">
+          <div class="demo-card-square mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text"><i class="material-icons">account_box</i> Pythoners</h2>
+            </div>
+              <div class="mdl-card__actions mdl-card--border">
+                  <div class="mdl-card__supporting-text" each={ opts.users }>
+                    <span class="devicons devicons-python pythoners"></span> <a href='https://github.com/{uid}' target='_blank'>{ nick }</a>
+                  </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
 </div>

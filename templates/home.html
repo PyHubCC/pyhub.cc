@@ -12,6 +12,7 @@
             page_no: 1,
             admin: {{ admin }},
             events: JSON.parse('{% raw events %}'),
+            users: JSON.parse('{% raw users %}'),
             uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
     </script>

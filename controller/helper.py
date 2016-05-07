@@ -19,7 +19,6 @@ class WebHookHandler(BaseController):
             if payload.get('head_commit'):
                 if payload.get('head_commit').get('message').startswith('Event:'):
                     msg = payload.get('head_commit').get('message').split('Event:')[-1]
-                    print(msg)
                     await self.application.db.save_event(msg)
 
             print("Execute git pull github master")
