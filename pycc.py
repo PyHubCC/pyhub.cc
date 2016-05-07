@@ -146,7 +146,7 @@ class NewHandler(BaseController):
                 link = link,
                 title = title,
                 abstract = abstract,
-                author = self.get_secure_cookie('nick').decode()
+                via = self.get_secure_cookie('nick').decode()
             ))
             success = await self.application.db.save_link(data)
             if not success:
