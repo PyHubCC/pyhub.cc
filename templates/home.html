@@ -11,6 +11,7 @@
             links: JSON.parse('{% raw json %}'),
             page_no: 1,
             admin: {{ admin }},
+            events: JSON.parse('{% raw events %}'),
             uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
     </script>

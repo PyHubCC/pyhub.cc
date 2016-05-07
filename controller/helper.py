@@ -10,16 +10,30 @@ import requests as req
 # '/web_hook/github_push'
 # '/web_hook/coding_git' => Webhooks
 class WebHookHandler(BaseController):
-    def post(self, *args, **kwargs):
+    async def post(self, *args, **kwargs):
         if self.request.headers.get('X-Coding-Event') == 'push':
             print("Execute git pull")
             subprocess.call("git pull", shell=True)
         if self.request.headers.get('X-GitHub-Event') == 'push':
+            payload = json.loads(self.request.body.decode())
+            if payload.get('head_commit'):
+                if payload.get('head_commit').get('message').startswith('Event:'):
+                    msg = payload.get('head_commit').get('message').split('Event:')[-1]
+                    await self.application.db.save_event(msg)
+
             print("Execute git pull github master")
             subprocess.call("git pull github master", shell=True)
         else:
             print(self.request.headers.get('X-Coding-Event'))
             self.write("Bye")
+    async def put(self, *args, **kwargs):
+            payload = json.loads(self.request.body.decode())
+            print(payload)
+            if payload.get('head_commit'):
+                if payload.get('head_commit').get('message').startswith('Event:'):
+                    msg = payload.get('head_commit').get('message').split('Event:')[-1]
+                    await self.application.db.save_event(msg)
+
     def get(self, *args, **kwargs):
         self.write("What're u looking 4?")
 

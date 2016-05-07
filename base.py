@@ -1,10 +1,11 @@
 import os
+import time
 import tornado.web
 from _config import Env
 import motor.motor_tornado
 from controller.helper import GitHub
 from bson import objectid
-
+from datetime import datetime
 __all__ = ['BaseApplication']
 _ROOT = os.path.dirname(__file__)
 ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
@@ -15,7 +16,19 @@ class DB:
         self.db = self._client[Env.DB_NAME]
         self.link_collection = self.db[Env.COL_LINK]
         self.user_collection = self.db[Env.COL_USER]
+        self.event_collection = self.db[Env.COL_EVENT]
 
+    @property
+    def date(self):
+        return datetime.today().strftime("%m/%d")
+
+    async def save_event(self, msg):
+        await self.event_collection.insert({'msg': msg, 'timestamp': int(time.time()), 'date': self.date})
+    async def get_events(self):
+        events = []
+        async for e in self.event_collection.find({}).sort('timestamp', 1).limit(3):
+            events.append(e)
+        return events
     async def get_link_by_id(self, link_id):
         return await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)})
     async def del_link(self, link_id):
