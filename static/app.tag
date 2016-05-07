@@ -99,6 +99,7 @@
   this.vote = function(e){
     if (opts.uid === undefined) {
       alert('请先登录！');
+      return;
     }
     e.preventUpdate = true; // Why this???
     var self = this;
