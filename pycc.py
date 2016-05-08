@@ -10,6 +10,7 @@ from controller import BaseController
 from controller.helper import WebHookHandler, JSONEncoder
 from controller.api import APIPost
 from controller.admin import AdminController
+import re
 
 
 define("port", default=8080, type=int)
@@ -136,8 +137,8 @@ class NewHandler(BaseController):
             self.write(JSONEncoder().encode({'status': 403}))
 
         link = self.get_body_argument('link')
-        title = self.get_body_argument('title')
-        abstract = self.get_body_argument('abstract')
+        title = re.sub(r'\s', ' ', self.get_body_argument('title'))
+        abstract = re.sub(r'\s', ' ', self.get_body_argument('abstract'))
 
         if len(link)*len(title)*len(abstract) == 0:
             self.write(JSONEncoder().encode({'status': 0}))
