@@ -43,14 +43,14 @@
       <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
         <div class="demo-card-square mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text"><i class="material-icons">chat</i> Msg</h2>
+            <h2 class="mdl-card__title-text"><i class="material-icons">chat</i>  留言框</h2>
           </div>
           <div class="mdl-card__actions mdl-card--border">
             <div class="mdl-card__supporting-text msg-spinner-container" hide={ msg_loaded }>
               <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
             <ul class="msg-list mdl-list" show={ msg_loaded }>
-              <li class="mdl-list__item mdl-list__item--three-line" each={ messages }>
+              <li class="mdl-list__item mdl-list__item--three-line msg_list__item" each={ messages }>
                 <span class="mdl-list__item-primary-content">
                   <span>{ user }</span>
                   <span class="mdl-list__item-text-body">

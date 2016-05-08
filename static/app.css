@@ -69,3 +69,8 @@ ul.msg-list {
   max-height: 400px;
   overflow-y: scroll;
 }
+ul.msg-list li.msg_list__item {
+  padding: 0px 16px;
+  min-height: 0px;
+  height: auto;
+}

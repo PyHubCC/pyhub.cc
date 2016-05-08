@@ -61,7 +61,7 @@ class APIPost(BaseController):
 # '/api/v1/msg'
 class MsgPost(BaseController):
     async def get(self, *args, **kwargs):
-        msgs = await self.application.db.get_new_msgs()
+        msgs = await self.application.db.get_new_msgs(20)
         self.write(self.json_encode({'msgs': msgs}))
 
     async def post(self, *args, **kwargs):
