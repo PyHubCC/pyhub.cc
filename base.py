@@ -6,6 +6,7 @@ import motor.motor_tornado
 from controller.helper import GitHub
 from bson import objectid
 from datetime import datetime
+import pytz
 __all__ = ['BaseApplication']
 _ROOT = os.path.dirname(__file__)
 ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
@@ -24,7 +25,7 @@ class DB:
         return datetime.today().strftime("%m/%d")
     @property
     def timestamp(self):
-        return datetime.now().strftime("%m-%d:%H:%M:%S")
+        return datetime.now(tz=pytz.timezone('Asia/Shanghai')).strftime("%m-%d:%H:%M:%S")
 
     async def get_new_msgs(self, n=5):
         msgs = []
