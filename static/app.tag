@@ -59,7 +59,7 @@
         <div class="page-content mdl-list mdl-cell--10-col">
           <div class="demo-card-square mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text"><i class="material-icons">account_box</i> Pythoners</h2>
+              <h2 class="mdl-card__title-text"><i class="material-icons">account_box</i>New Pythoners</h2>
             </div>
               <div class="mdl-card__actions mdl-card--border">
                   <div class="mdl-card__supporting-text" each={ opts.users }>

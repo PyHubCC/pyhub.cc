@@ -22,6 +22,12 @@ class DB:
     def date(self):
         return datetime.today().strftime("%m/%d")
 
+    async def get_new_users(self, n=5):
+        users = []
+        async for u in self.user_collection.find({}).sort('date', -1).limit(n):
+            users.append(u)
+        return users
+
     async def get_top_users(self, n=10):
         users=[]
         async for u in self.user_collection.find({}).sort('date', 1).limit(n):

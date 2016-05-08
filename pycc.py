@@ -46,7 +46,7 @@ class HomeHandler(BaseController):
         github_url = self.application.github.login_url
         res = await self.application.db.get_links()
         events = await self.application.db.get_events()
-        users = await self.application.db.get_top_users()
+        users = await self.application.db.get_new_users()
 
         render_data = dict(
             title='Python 头条',
