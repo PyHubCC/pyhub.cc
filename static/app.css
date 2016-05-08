@@ -1,5 +1,9 @@
 a {
-    text-decoration: none;
+  text-decoration: none;
+}
+a.title-link span{
+  color: #FFF;
+  font-weight: 700;
 }
 *, body, h6{
     font-family:-apple-system,Arial,Microsoft YaHei,Helvetica Neue,sans-serif;

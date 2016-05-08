@@ -49,7 +49,7 @@ class HomeHandler(BaseController):
         users = await self.application.db.get_top_users()
 
         render_data = dict(
-            title='PyHub.cc',
+            title='Python 头条',
             login_url=github_url,
             json=JSONEncoder().encode(res),
             nick=nick,
