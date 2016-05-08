@@ -1,6 +1,7 @@
 import tornado.web
 from urllib.parse import urlparse
 from datetime import datetime
+import time
 class BaseController(tornado.web.RequestHandler):
     FLASH_KEY = 'FL'
 
@@ -40,6 +41,7 @@ class BaseController(tornado.web.RequestHandler):
             public = True,
             favs = 1,
             favlist = [],
+            date = int(time.time())
         )
         link.update(data)
         return link
