@@ -7,8 +7,8 @@ from _config import Env
 from base import BaseApplication
 
 from controller import BaseController
-from controller.helper import WebHookHandler, JSONEncoder
-from controller.api import APIPost
+from controller.helper import JSONEncoder
+from controller.api import APIPost, MsgPost, WebHookHandler
 from controller.admin import AdminController
 import re
 
@@ -26,10 +26,11 @@ class Application(BaseApplication):
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
-            (r'/api/v1/post_data', APIPost),
             (r'/act/(\w+)', FavHandler),
             (r'/admin', AdminController),
-            (r'/new', NewHandler)
+            (r'/new', NewHandler),
+            (r'/api/v1/post_data', APIPost),
+            (r'/api/v1/msg', MsgPost)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page

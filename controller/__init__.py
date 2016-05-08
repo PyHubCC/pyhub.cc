@@ -1,10 +1,13 @@
 import tornado.web
 from urllib.parse import urlparse
 from datetime import datetime
+from .helper import JSONEncoder
 import time
 class BaseController(tornado.web.RequestHandler):
     FLASH_KEY = 'FL'
 
+    def json_encode(self, obj):
+        return JSONEncoder().encode(obj)
 
     def is_admin(self):
         uid = self.get_secure_cookie('uid')

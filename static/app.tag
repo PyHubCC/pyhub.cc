@@ -34,10 +34,48 @@
       </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
+      <!-- wechat box -->
       <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
         <div class="card-join-pyhub mdl-card">
         </div>
       </div>
+      <!-- end wechat box -->
+      <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text"><i class="material-icons">chat</i> Msg</h2>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-card__supporting-text msg-spinner-container" hide={ msg_loaded }>
+              <div class="mdl-spinner mdl-js-spinner is-active"></div>
+            </div>
+            <ul class="msg-list mdl-list" show={ msg_loaded }>
+              <li class="mdl-list__item mdl-list__item--three-line" each={ messages }>
+                <span class="mdl-list__item-primary-content">
+                  <span>{ user }</span>
+                  <span class="mdl-list__item-text-body">
+                    { content }
+                  </span>
+                </span>
+                <span class="mdl-list__item-secondary-content">
+                  <span class="mdl-list__item-secondary-info">{ timestamp }</span>
+                </span>
+              </li>
+            </ul>
+            <!-- Simple Textfield -->
+            <form onsubmit={ send_msg }>
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="msg_input" required>
+                <label class="mdl-textfield__label" for="msg_input">Text...</label>
+              </div>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled={ !msg_loaded || opts.uid == undefined }>
+                留言
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- update info box -->
       <div class="page-content mdl-list mdl-cell--10-col">
         <div class="demo-card-square mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title">
@@ -55,7 +93,8 @@
             </div>
           </div>
         </div>
-
+        <!-- end update info box -->
+        <!-- new user box -->
         <div class="page-content mdl-list mdl-cell--10-col">
           <div class="demo-card-square mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title">
@@ -68,6 +107,8 @@
               </div>
             </div>
           </div>
+          <!-- end new user box -->
+
       </div>
     </div>
 </div>
@@ -81,10 +122,39 @@
     </ul>
   </div>
 </footer>
+<script>
   // logic comes here
+  this.messages = [];
+  this.msg_loaded = false;
   this.admin = opts.admin;
   this.page_no = opts.page_no;
   this.items = opts.links;
+  this.on('mount', function () {
+    var self = this;
+    $.get('/api/v1/msg', {}, function (json) {
+      json = JSON.parse(json);
+      self.messages = json.msgs;
+      self.messages.reverse();
+      self.msg_loaded = true;
+      self.update();
+    });
+  });
+  this.send_msg = function (e) {
+    if (opts.uid === undefined) {
+      alert('请先登录！');
+      return false;
+    }
+    var msg_content = this.msg_input.value;
+    this.msg_loaded = false;
+    var self = this;
+    $.post('/api/v1/msg', {msg: msg_content}, function (json){
+      json = JSON.parse(json);
+      self.messages.push(json.msg);
+      self.msg_input.value = '';
+      self.msg_loaded = true;
+      self.update();
+    })
+  };
   this.load_more = function(e){
     var self = this;
     this.page_no += 1;
@@ -131,4 +201,5 @@
       })
     }
   }
+</script>
 </app>

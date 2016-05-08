@@ -59,3 +59,13 @@ a.title-link span{
   top: 23px;
   z-index: 999;
 }
+
+/* msg box */
+.msg-spinner-container {
+  text-align: center;
+}
+ul.msg-list {
+  min-height: 150px;
+  max-height: 400px;
+  overflow-y: scroll;
+}

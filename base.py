@@ -17,11 +17,30 @@ class DB:
         self.link_collection = self.db[Env.COL_LINK]
         self.user_collection = self.db[Env.COL_USER]
         self.event_collection = self.db[Env.COL_EVENT]
+        self.msg_collection = self.db['msg']
 
     @property
     def date(self):
         return datetime.today().strftime("%m/%d")
+    @property
+    def timestamp(self):
+        return datetime.now().strftime("%m-%d:%H:%M:%S")
 
+    async def get_new_msgs(self, n=5):
+        msgs = []
+        async for m in self.msg_collection.find({}).sort('date', -1).limit(n):
+            msgs.append(m)
+        return msgs
+    async def save_msg(self, content = '', user = '', uid = ''):
+        msg = dict(
+            user= user,
+            uid = uid,
+            content= content,
+            date= int(time.time()),
+            timestamp = self.timestamp
+        )
+        await self.msg_collection.insert(msg)
+        return msg
     async def get_new_users(self, n=5):
         users = []
         async for u in self.user_collection.find({}).sort('date', -1).limit(n):
