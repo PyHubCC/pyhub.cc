@@ -3,13 +3,10 @@
 {% block tabs%}
 <!-- Tabs -->
 <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-  <a href="#share" class="mdl-layout__tab is-active">分享</a>
-  <a href="#pin" class="mdl-layout__tab">今日推荐</a>
-  <a href="#topic" class="mdl-layout__tab">专题</a>
-  <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent mdl-layout--large-screen-only" id="add">
-    <i class="material-icons" role="presentation">add</i>
-    <span class="visuallyhidden">Add</span>
-  </button>
+  <a href="#share" class="mdl-layout__tab is-active">实时热门</a>
+  <a href="#pin" class="mdl-layout__tab">每日推荐</a>
+  <a href="#topic" class="mdl-layout__tab">专题分类</a>
+
 </div>
 
 <div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
@@ -63,38 +60,39 @@
   </div>
 </div>
 
-<footer class="mdl-mega-footer">
-  <div class="mdl-mega-footer__middle-section">
-
-    <div class="mdl-mega-footer__drop-down-section">
-      <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
-      <h1 class="mdl-mega-footer__heading">About</h1>
-      <ul class="mdl-mega-footer__link-list">
-        <li><a href=""><i class="material-icons" >language</i>PyHub </a></li>
-        <li><a href=""><i class="material-icons" >adb</i>Yushneng </a></li>
-      </ul>
-    </div>
-
-    <div class="mdl-mega-footer__drop-down-section">
-      <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
-      <h1 class="mdl-mega-footer__heading">Contact</h1>
-      <ul class="mdl-mega-footer__link-list">
-        <li><i class="material-icons">email</i> Admin#pyhub.cc</li>
-        <li><i class="material-icons">question_answer</i> PyHub</li>
-        <li><i class="material-icons">phone</i> (+86) 170--------</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="mdl-mega-footer__bottom-section">
-    <div class="mdl-logo">PyHub.cc</div>
-    <ul class="mdl-mega-footer__link-list">
-      <li><a href="https://github.com/PyHubCC/pyhub.cc">源码@GitHub</a></li>
-      <li><a href="http://rainy.im/donate">捐助本站</a></li>
-    </ul>
-  </div>
-
-</footer>
+<p-footer></p-footer>
+<script type="riot/tag">
+  <p-footer>
+    <footer class="mdl-mega-footer">
+      <div class="mdl-mega-footer__middle-section">
+        <div class="mdl-mega-footer__drop-down-section">
+          <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+          <h1 class="mdl-mega-footer__heading">About</h1>
+          <ul class="mdl-mega-footer__link-list">
+            <li><a href=""><i class="material-icons" >language</i>PyHub </a></li>
+            <li><a href=""><i class="material-icons" >adb</i>Yushneng </a></li>
+          </ul>
+        </div>
+        <div class="mdl-mega-footer__drop-down-section">
+          <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+          <h1 class="mdl-mega-footer__heading">Contact</h1>
+          <ul class="mdl-mega-footer__link-list">
+            <li><i class="material-icons">email</i> Admin#pyhub.cc</li>
+            <li><i class="material-icons">question_answer</i> PyHub</li>
+            <li><i class="material-icons">phone</i> (+86) 170--------</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mdl-mega-footer__bottom-section">
+        <div class="mdl-logo">PyHub.cc</div>
+        <ul class="mdl-mega-footer__link-list">
+          <li><a href="https://github.com/PyHubCC/pyhub.cc">源码@GitHub</a></li>
+          <li><a href="http://rainy.im/donate">捐助本站</a></li>
+        </ul>
+      </div>
+    </footer>
+  </p-footer>
+</script>
     <!-- <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script> -->
     <script type="riot/tag" src="{{ static_url('share.tag') }}" ></script>
     <script type="riot/tag" src="{{ static_url('pin.tag') }}" ></script>
@@ -116,5 +114,6 @@
           events: JSON.parse('{% raw events %}'),
           uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
+        riot.mount('p-footer', {})
     </script>
 {% end %}

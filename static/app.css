@@ -53,12 +53,12 @@ a.title-link span{
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
   height: 4px;
 }
-.mdl-demo #add {
+/*.mdl-demo #add {
   position: absolute;
   right: 40px;
   top: 23px;
   z-index: 999;
-}
+}*/
 
 /* msg box */
 .msg-spinner-container {

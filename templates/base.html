@@ -18,8 +18,8 @@
 </head>
 <body>
 <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-demo mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+<div class="mdl-demo mdl-layout mdl-js-layout mdl-layout--fixed-header ">
+  <header class="mdl-layout__header mdl-layout__header--waterfall mdl-color--primary">
     <div class="mdl-layout__header-row">
       {% block backhome %}
       {% end %}
@@ -31,6 +31,9 @@
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="add">
+          <i class="material-icons">add</i>
+        </button>
           {% if not uid %}
           <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
           {% else %}
