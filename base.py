@@ -93,8 +93,8 @@ class DB:
             links.append(link)
         return links
 
-    async def find_link_by_title(self, title):
-        return await self.link_collection.find_one({'title': title})
+    async def find_link_by_title_or_link(self, title, link):
+        return await self.link_collection.find_one({'$or': [{'title': title}, {'link': link}]})
     async def save_link(self, data):
         """
         API use
@@ -102,7 +102,7 @@ class DB:
         # print("Insert {}".format(data))
         if len(data['title']) == 0:
             return False
-        exist = await self.find_link_by_title(data['title'])
+        exist = await self.find_link_by_title_or_link(data['title'], data['link'])
         if not bool(exist):
             return await self.link_collection.insert(data)
         else:

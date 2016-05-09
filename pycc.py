@@ -52,12 +52,12 @@ class HomeHandler(BaseController):
         render_data = dict(
             title='Python 头条',
             login_url=github_url,
-            json=JSONEncoder().encode(res),
+            json=self.json_encode(res),
             nick=nick,
             uid = uid,
             admin = self.is_admin(),
-            events=JSONEncoder().encode(events),
-            users=JSONEncoder().encode(users)
+            events=self.json_encode(events),
+            users=self.json_encode(users)
         )
 
         self.render("home.html", **render_data)

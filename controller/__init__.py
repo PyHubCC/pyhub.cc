@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from datetime import datetime
 from .helper import JSONEncoder
 import time
+import re
 class BaseController(tornado.web.RequestHandler):
     FLASH_KEY = 'FL'
 
@@ -36,6 +37,8 @@ class BaseController(tornado.web.RequestHandler):
             public:
         }
         """
+        data['abstract'] = re.sub(r'\'|"', '`', data.get('abstract') or '')
+        data['title'] = re.sub(r'\'|"', '`', data.get('title') or '')
         link = dict(
             host = urlparse(data['link']).netloc,
             thumb = '',
