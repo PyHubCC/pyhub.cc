@@ -90,3 +90,15 @@ ul.mdl-mega-footer__link-list li i{
 ul.mdl-mega-footer__link-list li a i{
   font-size: 14px;
 }
+#scroll-top {
+  position: fixed;
+  display: none;
+  left: 0;
+  bottom: 0;
+  margin-left: 40px;
+  margin-bottom: 40px;
+  z-index: 900;
+}
+@media only screen and (min-width:851px){
+  #scroll-top {display: block}
+}
