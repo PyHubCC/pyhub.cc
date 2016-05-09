@@ -4,7 +4,7 @@
     <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
       <div class="page-content">
         <!-- Your content goes here -->
-        <ul class="mdl-list">
+        <ul class="mdl-list" >
             <li each={ items } class="mdl-list__item">
             <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
                 <div class="mdl-card__supporting-text">
@@ -33,15 +33,15 @@
         </button>
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-phone">
       <!-- wechat box -->
-      <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
-        <div class="card-join-pyhub mdl-card">
+      <div class="page-content mdl-list mdl-cell--10-col mdl-cell--8-col-phone card-join-pyhub-wrap">
+        <div class="card-join-pyhub mdl-card mdl-cell--12-col-phone">
         </div>
       </div>
       <!-- end wechat box -->
-      <div class="page-content mdl-list mdl-cell--10-col card-join-pyhub-wrap">
-        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+      <div class="page-content mdl-list mdl-cell--10-col mdl-cell--12-col-phone card-join-pyhub-wrap">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp mdl-cell--12-col-phone">
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text"><i class="material-icons">chat</i>  留言框</h2>
           </div>
@@ -76,8 +76,8 @@
         </div>
       </div>
       <!-- update info box -->
-      <div class="page-content mdl-list mdl-cell--10-col">
-        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+      <div class="page-content mdl-list mdl-cell--10-col mdl-cell--12-col-phone">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp mdl-cell--12-col-phone">
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text"><i class="material-icons">event</i> Update</h2>
           </div>
@@ -95,8 +95,8 @@
         </div>
         <!-- end update info box -->
         <!-- new user box -->
-        <div class="page-content mdl-list mdl-cell--10-col">
-          <div class="demo-card-square mdl-card mdl-shadow--2dp">
+        <div class="page-content mdl-list mdl-cell--10-col mdl-cell--12-col-phone">
+          <div class="demo-card-square mdl-card mdl-shadow--2dp mdl-cell--12-col-phone">
             <div class="mdl-card__title">
               <h2 class="mdl-card__title-text"><i class="material-icons">account_box</i>New Pythoners</h2>
             </div>

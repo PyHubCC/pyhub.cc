@@ -83,3 +83,10 @@ span.link-host {
   font-size: 10px;
   font-style: italic;
 }
+/*footer*/
+ul.mdl-mega-footer__link-list li i{
+  font-size: 14px;
+}
+ul.mdl-mega-footer__link-list li a i{
+  font-size: 14px;
+}

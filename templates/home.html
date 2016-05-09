@@ -3,30 +3,33 @@
 {% block tabs%}
 <!-- Tabs -->
 <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-  <a href="#overview" class="mdl-layout__tab is-active">分享</a>
-  <a href="/pin" class="mdl-layout__tab">今日推荐</a>
-  <a href="/topic" class="mdl-layout__tab">专题</a>
+  <a href="#share" class="mdl-layout__tab is-active">分享</a>
+  <a href="#pin" class="mdl-layout__tab">今日推荐</a>
+  <a href="#topic" class="mdl-layout__tab">专题</a>
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent mdl-layout--large-screen-only" id="add">
     <i class="material-icons" role="presentation">add</i>
     <span class="visuallyhidden">Add</span>
   </button>
 </div>
 
-<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+<div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
   <div class="mdl-snackbar__text"></div>
   <button class="mdl-snackbar__action" type="button"></button>
 </div>
 <script>
 (function() {
   'use strict';
-  var snackbarContainer = document.querySelector('#demo-toast-example');
+  var snackbarContainer = document.querySelector('#login-toast');
   var showToastButton = document.querySelector('#add');
+  window.toast = function (msg) {
+    var data = {message: msg || '请先登录！'};
+    snackbarContainer.MaterialSnackbar.showSnackbar(data);
+  }
   showToastButton.addEventListener('click', function() {
     'use strict';
     var uid = {% if uid %} '{{uid}}' {% else %} undefined {% end %};
     if (!uid) {
-      var data = {message: '请先登录！'};
-      snackbarContainer.MaterialSnackbar.showSnackbar(data);
+      toast();
     } else {
       window.location = window.location.origin + '/new';
     }
@@ -36,19 +39,82 @@
 {% end %}
 
 {% block content %}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+    <section class="mdl-layout__tab-panel is-active" id="share">
+      <div class="page-content">
+        <share></share>
+      </div>
+    </section>
+    <section class="mdl-layout__tab-panel " id="pin">
+      <div class="page-content">
+        <pin></pin>
+      </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="topic">
+      <div class="page-content">
+        <topic></topic>
+      </div>
+    </section>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-phone">
+    <right-side></right-side>
+  </div>
+</div>
 
-    <app></app>
+<footer class="mdl-mega-footer">
+  <div class="mdl-mega-footer__middle-section">
 
-    <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script>
+    <div class="mdl-mega-footer__drop-down-section">
+      <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+      <h1 class="mdl-mega-footer__heading">About</h1>
+      <ul class="mdl-mega-footer__link-list">
+        <li><a href=""><i class="material-icons" >language</i>PyHub </a></li>
+        <li><a href=""><i class="material-icons" >adb</i>Yushneng </a></li>
+      </ul>
+    </div>
+
+    <div class="mdl-mega-footer__drop-down-section">
+      <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+      <h1 class="mdl-mega-footer__heading">Contact</h1>
+      <ul class="mdl-mega-footer__link-list">
+        <li><i class="material-icons">email</i> Admin#pyhub.cc</li>
+        <li><i class="material-icons">question_answer</i> PyHub</li>
+        <li><i class="material-icons">phone</i> (+86) 170--------</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mdl-mega-footer__bottom-section">
+    <div class="mdl-logo">PyHub.cc</div>
+    <ul class="mdl-mega-footer__link-list">
+      <li><a href="https://github.com/PyHubCC/pyhub.cc">源码@GitHub</a></li>
+      <li><a href="http://rainy.im/donate">捐助本站</a></li>
+    </ul>
+  </div>
+
+</footer>
+    <!-- <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script> -->
+    <script type="riot/tag" src="{{ static_url('share.tag') }}" ></script>
+    <script type="riot/tag" src="{{ static_url('pin.tag') }}" ></script>
+    <script type="riot/tag" src="{{ static_url('topic.tag') }}" ></script>
+    <script type="riot/tag" src="{{ static_url('right-side.tag') }}" ></script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
-        riot.mount('app', {
+        riot.mount('share', {
             links: JSON.parse('{% raw json %}'),
             page_no: 1,
             admin: {{ admin }},
-            events: JSON.parse('{% raw events %}'),
-            users: JSON.parse('{% raw users %}'),
-            uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
+            uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
+            toast: toast,
+        })
+        riot.mount('pin',{})
+        riot.mount('topic',{})
+        riot.mount('right-side', {
+          users: JSON.parse('{% raw users %}'),
+          events: JSON.parse('{% raw events %}'),
+          uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
     </script>
 {% end %}
