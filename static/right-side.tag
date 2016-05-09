@@ -83,7 +83,7 @@
       $.get('/api/v1/msg', {}, function (json) {
         json = JSON.parse(json);
         self.messages = json.msgs;
-        self.messages.reverse();
+        self.messages;
         self.msg_loaded = true;
         self.update();
       });
@@ -98,7 +98,9 @@
       var self = this;
       $.post('/api/v1/msg', {msg: msg_content}, function (json){
         json = JSON.parse(json);
+        self.messages.reverse();
         self.messages.push(json.msg);
+        self.messages.reverse();
         self.msg_input.value = '';
         self.msg_loaded = true;
         self.update();
