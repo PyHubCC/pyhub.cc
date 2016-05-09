@@ -8,7 +8,7 @@
             <li each={ items } class="mdl-list__item">
             <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
                 <div class="mdl-card__supporting-text">
-                    <a href="{ link }" target="_blank"><h6>{title}</h6></a>
+                    <a href="{ link }" target="_blank"><h6>{title} <br/><span class="link-host"> { host }</h6></a>
                     <p>
                         {abstract}
                     </p>
@@ -28,7 +28,7 @@
             </li>
         </ul>
         <!-- Raised button with ripple -->
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick={ load_more }>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick={ load_more } id="btn_load_more">
             加载更多
         </button>
       </div>
@@ -115,10 +115,16 @@
 
 <footer class="mdl-mini-footer">
   <div class="mdl-mini-footer__left-section">
-    <div class="mdl-logo"><a href='https://pyhub.cc'><i class="devicons devicons-python" />PyHub.cc</a></div>
     <ul class="mdl-mini-footer__link-list">
-      <li><a href="https://github.com/PyHubCC"><i class="devicons devicons-github_badge" />GitHub</a></li>
-      <li><a href="#">Privacy & Terms</a></li>
+      <li>
+        <a href='https://pyhub.cc'><i class="devicons devicons-python" />PyHub.cc</a>
+      </li>
+      <li>
+        <a href="https://github.com/PyHubCC"><i class="devicons devicons-github_badge" />GitHub</a></li>
+      <li>
+        <a href="http://rainy.im/donate" target="_blank">
+          <i class="devicons devicons-coffeescript" />Donate</a>
+      </li>
     </ul>
   </div>
 </footer>
@@ -129,6 +135,7 @@
   this.admin = opts.admin;
   this.page_no = opts.page_no;
   this.items = opts.links;
+  this.loading = false;
   this.on('mount', function () {
     var self = this;
     $.get('/api/v1/msg', {}, function (json) {
@@ -155,17 +162,7 @@
       self.update();
     })
   };
-  this.load_more = function(e){
-    var self = this;
-    this.page_no += 1;
-    $.post('/share/' + this.page_no,{},function(json){
-      var data = JSON.parse(json);
-      for (record of data){
-        self.items.push(record);
-      }
-      self.update();
-    })
-  }
+
   this.vote = function(e){
     if (opts.uid === undefined) {
       alert('请先登录！');
@@ -193,11 +190,23 @@
   this.is_faved = function() {
     return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
   }
+  this.load_more = function(e){
+    var self = this;
+    this.page_no += 1;
+    $.post('/share/' + this.page_no,{},function(json){
+      var data = JSON.parse(json);
+      for (record of data){
+        self.items.push(record);
+      }
+      self.update();
+    })
+  }
   this.unpublic = function(e) {
+    var self = this;
     if(confirm('DELETE '+ this.title +'?')){
-      var self = this;
+        var index = self.items.indexOf(e.item);
+        self.items.splice(index, 1);
       $.post('/act/'+self._id, {'action': 'DEL'}, function(json){
-        window.location = window.location.href;
       })
     }
   }
