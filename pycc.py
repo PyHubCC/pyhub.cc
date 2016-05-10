@@ -36,11 +36,11 @@ class Application(BaseApplication):
 # '/' => Home page
 class HomeHandler(BaseController):
     def fake_login(self):
-        self.set_secure_cookie('nick', 'Yushneng')
-        self.set_secure_cookie('uid', 'rainyear')
+        self.set_secure_cookie('nick', 'Guest')
+        self.set_secure_cookie('uid', 'mmmmmmmmm')
 
     async def get(self):
-        # self.fake_login()
+        self.fake_login()
 
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')

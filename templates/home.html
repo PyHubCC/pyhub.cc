@@ -6,7 +6,6 @@
   <a href="#share" class="mdl-layout__tab is-active">实时热门</a>
   <a href="#pin" class="mdl-layout__tab">每日推荐</a>
   <a href="#topic" class="mdl-layout__tab">专题分类</a>
-
 </div>
 
 <div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
@@ -19,6 +18,7 @@
   var snackbarContainer = document.querySelector('#login-toast');
   var showToastButton = document.querySelector('#add');
   window.toast = function (msg) {
+      alert(msg || '请先登录！')
     var data = {message: msg || '请先登录！'};
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
   }
@@ -78,7 +78,7 @@
           <h1 class="mdl-mega-footer__heading">Contact</h1>
           <ul class="mdl-mega-footer__link-list">
             <li><i class="material-icons">email</i> Admin#pyhub.cc</li>
-            <li><i class="material-icons">question_answer</i> PyHub</li>
+            <li><i class="material-icons">question_answer</i> Py_Hub</li>
             <li><i class="material-icons">phone</i> (+86) 170--------</li>
           </ul>
         </div>

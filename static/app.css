@@ -70,9 +70,13 @@ ul.msg-list {
   overflow-y: scroll;
 }
 ul.msg-list li.msg_list__item {
-  padding: 0px 16px;
+  padding: 4px 16px;
   min-height: 0px;
   height: auto;
+}
+ul.msg-list li.msg_list__item span {
+  height: auto;
+  max-width: 180px;
 }
 button#btn_load_more {
   width: 100%;
