@@ -14,6 +14,7 @@ import re
 
 
 define("port", default=8080, type=int)
+define("env", default='dev', type=str)
 
 
 class Application(BaseApplication):
@@ -40,7 +41,8 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('uid', 'mmmmmmmmm')
 
     async def get(self):
-        self.fake_login()
+        if options.env == 'dev':
+            self.fake_login()
 
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
@@ -157,7 +159,8 @@ class NewHandler(BaseController):
                 self.write(JSONEncoder().encode({'status': 200, 'link': link}))
 
 def main():
-    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=(Env.env == 'pub'))
+    options.parse_command_line()
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 if __name__ == '__main__':
