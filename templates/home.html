@@ -108,7 +108,8 @@
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
         riot.mount('share', {
-            links: JSON.parse('{% raw json %}'),
+            // links: JSON.parse('{% raw json %}'),
+            links: {% raw json %},
             page_no: 1,
             admin: {{ admin }},
             uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
@@ -117,7 +118,7 @@
         riot.mount('pin',{})
         riot.mount('topic',{})
         riot.mount('right-side', {
-          users: JSON.parse('{% raw users %}'),
+          users: {% raw users %},
           events: JSON.parse('{% raw events %}'),
           uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %}
         })
