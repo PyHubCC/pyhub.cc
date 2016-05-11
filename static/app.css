@@ -1,6 +1,11 @@
 a {
   text-decoration: none;
 }
+a.title-link-real {
+  color: #FFF;
+  font-weight: 700;
+  margin-right: 10px;
+}
 a.title-link span{
   color: #FFF;
   font-weight: 700;

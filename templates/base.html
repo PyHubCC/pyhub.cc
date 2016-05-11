@@ -26,7 +26,10 @@
       {% block backhome %}
       {% end %}
       <!-- Title -->
-      <a href="/" title="{{ title }}" class="title-link">
+      <a href="/" title="{{ title }}" class="title-link-real">
+        <i class="material-icons">home</i>
+      </a>
+      <a href="#" title="{{ title }}" class="title-link">
         <span class="mdl-layout-title">{{ title }}</span>
       </a>
       <!-- Add spacer, to align navigation to the right -->
@@ -73,6 +76,31 @@
     </div>
   </main>
 </div>
+<div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<script>
+(function() {
+  'use strict';
+  var snackbarContainer = document.querySelector('#login-toast');
+  var showToastButton = document.querySelector('#add');
+  window.toast = function (msg) {
+      alert(msg || '请先登录！')
+    var data = {message: msg || '请先登录！'};
+    snackbarContainer.MaterialSnackbar.showSnackbar(data);
+  }
+  showToastButton.addEventListener('click', function() {
+    'use strict';
+    var uid = {% if uid %} '{{uid}}' {% else %} undefined {% end %};
+    if (!uid) {
+      toast();
+    } else {
+      window.location = window.location.origin + '/new';
+    }
+  });
+}());
+</script>
 <!-- <a href="#top" id="scroll-top" class="mdl-button mdl--large-screen-only mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">airplanemode_active</i></a> -->
 <script>
   (function () {

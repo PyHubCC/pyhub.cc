@@ -21,7 +21,7 @@ class Application(BaseApplication):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
-            (r'/u/(\w+)', UserPage),
+            (r'/u/(\w*)', UserPage),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
@@ -37,8 +37,8 @@ class Application(BaseApplication):
 # '/' => Home page
 class HomeHandler(BaseController):
     def fake_login(self):
-        self.set_secure_cookie('nick', 'Guest')
-        self.set_secure_cookie('uid', 'mmmmmmmmm')
+        self.set_secure_cookie('nick', 'Yushneng')
+        self.set_secure_cookie('uid', 'rainyear')
 
     async def get(self):
         if options.env == 'dev':
@@ -68,8 +68,46 @@ class HomeHandler(BaseController):
         self.redirect("/")
 # '/u/uid' => User Page
 class UserPage(BaseController):
-    def get(self, uid):
-        self.write("Comming..."+uid)
+    async def get(self, uid):
+        cuid = self.get_secure_cookie('uid').decode()
+        if not uid:
+            self.redirect("/u/{}".format(cuid))
+        user = await self.application.db.get_user_by_uid(uid)
+        is_self = 0
+        if not user:
+            user = {'nick': 'None'}
+            favs = []
+        else:
+            favs = await self.application.db.get_favs_by_uid(uid)
+            if cuid == uid:
+                is_self = 1
+
+        render_data = dict(
+            title='{} 的收藏'.format(user['nick']),
+            login_url=self.application.github.login_url,
+            uid=cuid,
+            nick=self.get_secure_cookie('nick'),
+
+            favs = self.json_encode(favs),
+            is_self=is_self,
+        )
+        self.render("user.html", **render_data)
+    async def post(self, *args, **kwargs):
+        uid = self.get_secure_cookie('uid').decode()
+        if not uid:
+            self.write({'status': 403})
+        action = self.get_body_argument('action')
+        if action == 'DEL':
+            link_id = self.get_body_argument('_id')
+            if not link_id:
+                self.write({'status': -1})
+            print('remove', link_id, uid)
+            await self.application.db.remove_fav_link_from_uid(link_id, uid)
+        elif action == 'LOAD':
+            pass
+        else:
+            self.write({'status': 202})
+
 
 # '/share/page_no' => Share page
 class ShareHandler(BaseController):

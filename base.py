@@ -19,6 +19,7 @@ class DB:
         self.user_collection = self.db[Env.COL_USER]
         self.event_collection = self.db[Env.COL_EVENT]
         self.msg_collection = self.db['msg']
+        self.fav_collection = self.db['fav']
 
     @property
     def date(self):
@@ -42,12 +43,19 @@ class DB:
         )
         await self.msg_collection.insert(msg)
         return msg
+
+    async def get_user_by_uid(self, uid):
+        return await self.user_collection.find_one({'uid': uid})
+    async def get_favs_by_uid(self, uid, n = 20):
+        favs = []
+        async for f in self.fav_collection.find({'uid': uid}).sort('timestamp', -1).limit(n):
+            favs.append(f['link'])
+        return favs
     async def get_new_users(self, n=5):
         users = []
         async for u in self.user_collection.find({}).sort('date', -1).limit(n):
             users.append(u)
         return users
-
     async def get_top_users(self, n=10):
         users=[]
         async for u in self.user_collection.find({}).sort('date', 1).limit(n):
@@ -75,6 +83,12 @@ class DB:
                                                '$push': {'favlist': uid}})
             await self.user_collection.update({'uid': uid},
                                               {'$push': {'favlist': link_id}})
+            await self.fav_collection.insert({'uid': uid,
+                                 'link_id': link_id,
+                                 'timestamp': int(time.time()),
+                                 'link': exist})
+    async def remove_fav_link_from_uid(self, link_id, uid):
+        await self.fav_collection.remove({'uid': uid, 'link_id': link_id})
 
     async def get_user(self, uid):
         return await self.user_collection.find_one({'uid': uid})

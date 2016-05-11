@@ -8,31 +8,6 @@
   <a href="#topic" class="mdl-layout__tab">专题分类</a>
 </div>
 
-<div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
-  <div class="mdl-snackbar__text"></div>
-  <button class="mdl-snackbar__action" type="button"></button>
-</div>
-<script>
-(function() {
-  'use strict';
-  var snackbarContainer = document.querySelector('#login-toast');
-  var showToastButton = document.querySelector('#add');
-  window.toast = function (msg) {
-      alert(msg || '请先登录！')
-    var data = {message: msg || '请先登录！'};
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-  }
-  showToastButton.addEventListener('click', function() {
-    'use strict';
-    var uid = {% if uid %} '{{uid}}' {% else %} undefined {% end %};
-    if (!uid) {
-      toast();
-    } else {
-      window.location = window.location.origin + '/new';
-    }
-  });
-}());
-</script>
 {% end %}
 
 {% block content %}
@@ -113,7 +88,7 @@
             page_no: 1,
             admin: {{ admin }},
             uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
-            toast: toast,
+            toast: window.toast,
         })
         riot.mount('pin',{})
         riot.mount('topic',{})
