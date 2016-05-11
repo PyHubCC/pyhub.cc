@@ -83,7 +83,7 @@ class UserPage(BaseController):
                 is_self = 1
 
         render_data = dict(
-            title='{} 的收藏'.format(user['nick']),
+            title='{} \'s Home'.format(user['nick']),
             login_url=self.application.github.login_url,
             uid=cuid,
             nick=self.get_secure_cookie('nick'),
