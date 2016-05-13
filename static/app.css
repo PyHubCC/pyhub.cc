@@ -116,3 +116,11 @@ div.action-btns {
   padding: 0px;
   margin: 0px;
 }
+div.detail-content {
+  margin-top: 20px;
+  width: 100%;
+}
+div.qrcode-wraper {
+  padding: 20px;
+  text-align: center;
+}

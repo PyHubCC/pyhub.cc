@@ -8,7 +8,7 @@ from base import BaseApplication
 
 from controller import BaseController
 from controller.helper import JSONEncoder
-from controller.api import APIPost, MsgPost, WebHookHandler
+from controller.api import APIPost, MsgPost, WebHookHandler, CommentAPI, FavHandler
 from controller.admin import AdminController
 import re
 
@@ -32,7 +32,8 @@ class Application(BaseApplication):
             (r'/admin', AdminController),
             (r'/new', NewHandler),
             (r'/api/v1/post_data', APIPost),
-            (r'/api/v1/msg', MsgPost)
+            (r'/api/v1/msg', MsgPost),
+            (r'/api/v1/comment/(\w*)', CommentAPI)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
@@ -42,7 +43,7 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('uid', 'rainyear')
 
     async def get(self):
-        if options.env == 'dev':
+        if options.env == 'dev' :
             self.fake_login()
 
         nick = self.get_secure_cookie('nick')
@@ -53,7 +54,7 @@ class HomeHandler(BaseController):
         users = await self.application.db.get_new_users()
 
         render_data = dict(
-            title='Python 头条',
+            title='首页',
             login_url=github_url,
             json=self.json_encode(res),
             nick=nick,
@@ -110,8 +111,18 @@ class UserPage(BaseController):
             self.write({'status': 202})
 # '/py/link_id' => detail page
 class DetailHandler(BaseController):
-    def get(self, link_id):
-        self.write(link_id)
+    async def get(self, link_id):
+        if not link_id:
+            self.redirect('/404')
+        link = await self.application.db.get_link_by_id(link_id)
+        if not link:
+            self.redirect('/404')
+        render_data = dict(
+            title = link['title'],
+            link  = link,
+            **self.default_data
+        )
+        self.render('detail.html', **render_data)
 
 
 # '/share/page_no' => Share page
@@ -145,23 +156,7 @@ class LogoutHandler(BaseController):
         self.clear_all_cookies()
         self.redirect("/")
 
-# '/fav/link_id' => Fav action
-# '/act/link_id' => Action
-class FavHandler(BaseController):
 
-    async def post(self, link_id):
-        uid = self.get_secure_cookie('uid')
-        if isinstance(uid, bytes):
-            uid = uid.decode()
-        if not uid:
-            self.write(JSONEncoder().encode({'status': 403}))
-
-        action = self.get_body_argument('action')
-        if action == 'FAV':
-            await self.application.db.fav_link(link_id, uid)
-        elif action == 'DEL':
-            await self.application.db.del_link(link_id)
-        self.write(JSONEncoder().encode({'status': 200}))
 
 class NewHandler(BaseController):
     def get(self, *args, **kwargs):

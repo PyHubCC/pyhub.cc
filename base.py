@@ -18,8 +18,10 @@ class DB:
         self.link_collection = self.db[Env.COL_LINK]
         self.user_collection = self.db[Env.COL_USER]
         self.event_collection = self.db[Env.COL_EVENT]
+
         self.msg_collection = self.db['msg']
         self.fav_collection = self.db['fav']
+        self.comment_collection = self.db['comment']
 
     @property
     def date(self):
@@ -27,6 +29,23 @@ class DB:
     @property
     def timestamp(self):
         return datetime.now(tz=pytz.timezone('Asia/Shanghai')).strftime("%m-%d:%H:%M:%S")
+
+    async def get_comments_by_link_id(self, link_id, n = 50):
+        comments = []
+        async for c in self.comment_collection.find({'link_id': link_id}).sort('date', 1).limit(n):
+            comments.append(c)
+        return comments
+    async def save_comment(self, link_id, uid, nick, content):
+        await self.comment_collection.insert({
+            'link_id': link_id,
+            'uid': uid,
+            'nick': nick,
+            'comment': content,
+            'timestamp': self.timestamp,
+            'date': int(time.time())
+        })
+        await self.link_collection.update({'_id': objectid.ObjectId(link_id)},
+                                          {'$inc': {'comments': 1}})
 
     async def get_new_msgs(self, n=5):
         msgs = []

@@ -74,3 +74,41 @@ class MsgPost(BaseController):
         msg = re.sub(r'\s', ' ', self.get_body_argument('msg'))
         result = await self.application.db.save_msg(content=msg, user=self.get_secure_cookie('nick').decode(), uid = uid)
         self.write(self.json_encode(dict(status=200, msg=result)))
+
+# '/api/v1/comment'
+class CommentAPI(BaseController):
+    async def get(self, link_id):
+        if not link_id:
+            self.write({"status": 404})
+        comments = await self.application.db.get_comments_by_link_id(link_id)
+        self.write(self.json_encode(comments))
+    async def post(self, *args, **kwargs):
+        uid = self.get_secure_cookie('uid')
+        if isinstance(uid, bytes):
+            uid = uid.decode()
+        if not uid:
+            self.write({'status': 403})
+        nick = self.get_secure_cookie('nick').decode()
+
+        link_id = self.get_body_argument('link_id')
+        comment = self.get_body_argument('comment')
+        await self.application.db.save_comment(link_id, uid, nick, comment)
+        self.write({'link_id': link_id, 'comment': comment})
+
+# '/fav/link_id' => Fav action
+# '/act/link_id' => Action
+class FavHandler(BaseController):
+
+    async def post(self, link_id):
+        uid = self.get_secure_cookie('uid')
+        if isinstance(uid, bytes):
+            uid = uid.decode()
+        if not uid:
+            self.write({'status': 403})
+
+        action = self.get_body_argument('action')
+        if action == 'FAV':
+            await self.application.db.fav_link(link_id, uid)
+        elif action == 'DEL':
+            await self.application.db.del_link(link_id)
+        self.write(self.json_encode({'status': 200}))

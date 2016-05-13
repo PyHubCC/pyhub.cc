@@ -7,6 +7,13 @@ import re
 class BaseController(tornado.web.RequestHandler):
     FLASH_KEY = 'FL'
 
+    @property
+    def default_data(self):
+        return dict(
+            login_url = self.application.github.login_url,
+            uid = self.get_secure_cookie('uid'),
+            nick = self.get_secure_cookie('nick'),
+        )
     def json_encode(self, obj):
         return JSONEncoder().encode(obj)
 

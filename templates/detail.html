@@ -1,0 +1,124 @@
+{% extends "base.html"  %}
+{% block tabs%}
+<!-- Tabs -->
+{% end %}
+{% block content %}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+    <div class="mdl-card mdl-shadow--4dp detail-content">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">
+          <a href="{{ link['link'] }}" title="{{ link['title']}}">
+            {{ link['title'] }}
+          </a>
+        </h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{ link['abstract'] }}
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <comments></comments>
+      </div>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--2-col">
+    <!-- wechat box -->
+    <div class="page-content mdl-list mdl-cell--10-col mdl-cell--8-col-phone card-join-pyhub-wrap">
+      <div class="mdl-card mdl-cell--12-col-phone mdl-shadow--4dp qrcode-wraper">
+        <p>分享到微信：</p>
+        <div id="qrcode"></div>
+      </div>
+    </div>
+    <!-- end wechat box -->
+  </div>
+</div>
+<riot-footer></riot-footer>
+  <script type="riot/tag">
+    <comments>
+      <div class="comment-title">
+        <h4 ><i class="material-icons">forum</i>评论：</h4>
+        <div class="mdl-textfield mdl-js-textfield comment-input-wrapper">
+          <textarea class="mdl-textfield__input" type="text" rows= "3" id="comment_conent" ></textarea>
+          <label class="mdl-textfield__label" for="sample5">留言...</label>
+        </div>
+        <p >
+          <div show={ loading_send } id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        </p>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled={!is_login} onclick={ comment }>
+          留言
+        </button>
+      </div>
+      <hr/>
+      <div class="mdl-card__supporting-text msg-spinner-container" show={ loading_comments }>
+        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+      </div>
+      <ul class="demo-list-two mdl-list">
+        <li class="mdl-list__item mdl-list__item--two-line" each={ comments }>
+          <span class="mdl-list__item-primary-content">
+            <span>{ nick }</span>
+            <span class="mdl-list__item-sub-title">{ comment }</span>
+          </span>
+          <span class="mdl-list__item-secondary-content">
+            <span class="mdl-list__item-secondary-info">{ timestamp }</span>
+          </span>
+        </li>
+      </ul>
+      <style>
+        div.comment-title {
+          padding: 8px;
+        }
+        div.comment-input-wrapper {width: 100%;}
+        .mdl-list__item-sub-title {max-width: 85%;}
+        .mdl-list__item-secondary-content {min-width: 15%;}
+      </style>
+      this.comments = [];
+      this.is_login = opts.uid !== undefined;
+      this.loading_send = false;
+      this.loading_comments = true;
+      this.on('mount', function () {
+        var self = this;
+        $.get('/api/v1/comment/{{link["_id"]}}', {}, function (comments) {
+          self.comments = JSON.parse(comments);
+          self.loading_comments = false;
+          self.update();
+        }).fail(function () {
+          console.error("Failed to load comments");
+        });
+      });
+      this.comment = function (e) {
+        if (!this.is_login) {
+          window.toast();
+          return false;
+        }
+        var comment_conent = this.comment_conent.value;
+        if (comment_conent.length == 0 || comment_conent.length > 200){
+          alert("字数限制在 0~200！");
+          return false;
+        }
+        var self = this;
+        this.loading_send = true;
+        $.post('/api/v1/comment/{{link["_id"]}}', {'link_id': "{{link['_id']}}", 'comment': comment_conent}, function (res) {
+          self.loading_send = false;
+          self.comment_conent.value = "";
+          self.comments.push({'nick': '{{ nick }}', 'comment': comment_conent, 'timestamp': '1s 前'})
+          self.update();
+        });
+      }
+    </comments>
+  </script>
+  <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+  <script type="riot/tag" src="{{ static_url('footer.tag') }}" ></script>
+  <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+  <script>
+    (function () {
+      $('#qrcode').qrcode({width: 200, height: 200, text: window.location.href});
+    })();
+    riot.mount('riot-footer', {
+      vultr: "{{ static_url('logo_onwhite.svg') }}",
+    });
+    riot.mount('comments', {
+      uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
+    });
+  </script>
+{% end %}
