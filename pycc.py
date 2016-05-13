@@ -22,6 +22,7 @@ class Application(BaseApplication):
         handlers = [
             (r'/', HomeHandler),
             (r'/u/(\w*)', UserPage),
+            (r'/py/(\w+)', DetailHandler),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
@@ -107,6 +108,10 @@ class UserPage(BaseController):
             pass
         else:
             self.write({'status': 202})
+# '/py/link_id' => detail page
+class DetailHandler(BaseController):
+    def get(self, link_id):
+        self.write(link_id)
 
 
 # '/share/page_no' => Share page

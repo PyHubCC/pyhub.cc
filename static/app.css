@@ -111,3 +111,8 @@ ul.mdl-mega-footer__link-list li a i{
 @media only screen and (min-width:851px){
   #scroll-top {display: block}
 }
+
+div.action-btns {
+  padding: 0px;
+  margin: 0px;
+}

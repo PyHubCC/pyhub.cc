@@ -77,8 +77,9 @@
     </div>
   </main>
 </div>
+
 <div id="login-toast" class="mdl-js-snackbar mdl-snackbar">
-  <div class="mdl-snackbar__text"></div>
+  <div class="mdl-snackbar__text" ></div>
   <button class="mdl-snackbar__action" type="button"></button>
 </div>
 <script>
@@ -87,7 +88,7 @@
   var snackbarContainer = document.querySelector('#login-toast');
   var showToastButton = document.querySelector('#add');
   window.toast = function (msg) {
-      alert(msg || '请先登录！')
+      // alert(msg || '请先登录！')
     var data = {message: msg || '请先登录！'};
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
   }

@@ -47,11 +47,6 @@
         <h2 class="mdl-card__title-text"><i class="material-icons">event</i> Update</h2>
       </div>
         <div class="mdl-card__actions mdl-card--border">
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">share</i>
-            </button>
-          </div>
             <div class="mdl-card__supporting-text" each={ opts.events }>
               <i class="material-icons">done</i> {date}: { msg }
             </div>

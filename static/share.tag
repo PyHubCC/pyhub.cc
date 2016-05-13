@@ -1,25 +1,40 @@
 <share>
   <ul class="mdl-list" >
       <li each={ items } class="mdl-list__item">
-      <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
-          <div class="mdl-card__supporting-text">
-              <a href="{ link }" target="_blank"><h6>{title} <br/><span class="link-host"> { host }</h6></a>
-              <p>
-                  {abstract}
-              </p>
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
-                  <i class="material-icons">{ is_faved() }</i> { favs }
-              </a>
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                { via }
-              </a>
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" show={ admin } onclick={ unpublic }>
-                <i class="material-icons" >delete_forever</i>
-              </a>
-          </div>
-      </div>
+        <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
+            <div class="mdl-card__supporting-text">
+                <a href="{ link }" target="_blank"><h6>{title} <br/><span class="link-host"> { host }</h6></a>
+                  <p>
+                      {abstract}
+                  </p>
+            </div>
+            <div class="mdl-card__actions mdl-card--border mdl-grid">
+              <div class="mdl-grid action-btns">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
+                      <i class="material-icons">{ is_faved() }</i> { favs }
+                  </a>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    { via }
+                  </a>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/py/{ _id }">
+                    <i class="material-icons">share</i>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="mdl-card__menu" show={ admin }>
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick={ unpublic }>
+                <i class="material-icons">delete</i>
+              </button>
+            </div>
+        </div>
       </li>
   </ul>
   <!-- Raised button with ripple -->
@@ -78,6 +93,9 @@
       $.post('/act/'+self._id, {'action': 'DEL'}, function(json){
       })
     }
+  }
+  this.body_clicked = function (e) {
+    alert(e)
   }
   </script>
 </share>
