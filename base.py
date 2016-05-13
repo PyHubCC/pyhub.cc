@@ -120,9 +120,12 @@ class DB:
         if not bool(exist):
             return await self.link_collection.insert(data)
         else:
+            """
+            # remove means never accept again
             if not exist['public']:
                 await self.link_collection.remove({"_id": objectid.ObjectId(exist['_id'])})
                 return await self.link_collection.insert(data)
+            """
             return False
 
 class BaseApplication(tornado.web.Application):
