@@ -9,6 +9,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="keywords" content="Python 头条,Python开发者中心,Python开发者平台,Python开发者社区,程序员,极客,技术,开源,编程" />
+    {% block metas %}
+    {% end %}
 
     <link rel="alternate icon" type="image/png" href="{{ static_url('snakex64.ico') }}" />
     <link rel="apple-touch-icon" href="{{ static_url('snake.ico') }}" />
@@ -59,10 +61,10 @@
 
   </header>
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">{{ title }}</span>
+    <span class="mdl-layout-title">Python 头条</span>
     <nav class="mdl-navigation">
           {% if not uid %}
-          <a class="mdl-navigation__link" href="{{ login_url }}">登录</a>
+          <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
           {% else %}
           <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
           <a class="mdl-navigation__link" href='/logout'>登出</a>

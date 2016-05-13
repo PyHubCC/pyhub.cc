@@ -58,12 +58,6 @@ a.title-link span{
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
   height: 4px;
 }
-/*.mdl-demo #add {
-  position: absolute;
-  right: 40px;
-  top: 23px;
-  z-index: 999;
-}*/
 
 /* msg box */
 .msg-spinner-container {
@@ -110,6 +104,9 @@ ul.mdl-mega-footer__link-list li a i{
 }
 @media only screen and (min-width:851px){
   #scroll-top {display: block}
+}
+@media only screen and (max-width:851px){
+  .mdl-layout__header-row { padding-left: 50px;}
 }
 
 div.action-btns {
