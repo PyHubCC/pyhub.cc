@@ -27,6 +27,20 @@
       <div class="mdl-card__supporting-text">
         {{ link['abstract'] }}
       </div>
+      <div class="mdl-card__actions mdl-card--border mdl-grid">
+        <div class="mdl-grid action-btns">
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">android</i> {{ link['via'] }}
+            </a>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">today</i> {{ datetime.datetime.fromtimestamp(link['date']).strftime('%m/%d') }}
+            </a>
+          </div>
+        </div>
+      </div>
       <div class="mdl-card__actions mdl-card--border">
         <comments></comments>
       </div>

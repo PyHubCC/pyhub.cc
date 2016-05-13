@@ -25,7 +25,6 @@
                     <i class="material-icons">share</i>
                   </a>
                 </div>
-
               </div>
             </div>
 
