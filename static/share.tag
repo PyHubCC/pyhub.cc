@@ -3,24 +3,19 @@
       <li each={ items } class="mdl-list__item">
         <div class="card-wide mdl-card mdl-shadow--4dp mdl-cell--12-col">
             <div class="mdl-card__supporting-text">
-                <a href="{ link }" target="_blank"><h6>{title} <br/><span class="link-host"> { host }</h6></a>
+                <a href="{ link }" target="_blank"><h6>{title} <br/><span class="link-host"> { host } via {via} </span> </h6></a>
                   <p>
                       {abstract}
                   </p>
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-grid">
               <div class="mdl-grid action-btns">
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
                       <i class="material-icons">{ is_faved() }</i> { favs }
                   </a>
                 </div>
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
-                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                    { via }
-                  </a>
-                </div>
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/py/{ _id }">
                     <i class="material-icons">share</i>
                   </a>

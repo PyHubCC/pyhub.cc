@@ -17,23 +17,14 @@
   <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
     <div class="mdl-card mdl-shadow--4dp detail-content content">
       <img src="{{ static_url('pyhub-logo-328x328.png') }}" width="0px"/>
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">
-          <a href="{{ link['link'] }}" title="{{ link['title']}}">
-            {{ link['title'] }}
-          </a>
-        </h2>
-      </div>
       <div class="mdl-card__supporting-text">
-        {{ link['abstract'] }}
+          <a href="{{ link['link'] }}" title="{{ link['title']}}" target="_blank"><h6>{{ link['title']}} <br/><span class="link-host"> {{link['host']}} via {{link['via']}} </span></h6></a>
+          <p>
+            {{ link['abstract'] }}
+          </p>
       </div>
       <div class="mdl-card__actions mdl-card--border mdl-grid">
         <div class="mdl-grid action-btns">
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">android</i> {{ link['via'] }}
-            </a>
-          </div>
           <div class="mdl-cell mdl-cell--6-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
             <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               <i class="material-icons">today</i> {{ datetime.datetime.fromtimestamp(link['date']).strftime('%m/%d') }}
