@@ -118,7 +118,7 @@ class DetailHandler(BaseController):
         if not link:
             self.redirect('/404')
         render_data = dict(
-            title = '分享到…',
+            title = link['title'],
             link  = link,
             **self.default_data
         )

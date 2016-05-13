@@ -31,7 +31,7 @@
         <i class="material-icons">home</i>
       </a>
       <a href="#" title="{{ title }}" class="title-link">
-        <span class="mdl-layout-title">{{ title }}</span>
+        <span class="mdl-layout-title">{% if len(title) < 15 %} {{ title }} {% else %} {{ title[:15] }}... {% end %}</span>
       </a>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
