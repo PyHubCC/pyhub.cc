@@ -12,7 +12,8 @@ async def ranky():
     c = db.links
     async for document in c.find({'public': True}):
         favs = document.get('favs') or 1
-        new_rank = score(favs, document['date'])
+        comments = document.get('comments') or 0
+        new_rank = score(favs + comments, document['date'])
         print(document['_id'], new_rank)
         await c.update({'_id': objectid.ObjectId(document['_id'])}, {'$set': {'rank': new_rank}}, False, True)
 
