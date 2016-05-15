@@ -9,6 +9,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="keywords" content="Python 头条,Python开发者中心,Python开发者平台,Python开发者社区,程序员,极客,技术,开源,编程" />
+
     {% block metas %}
     {% end %}
 
@@ -29,16 +30,13 @@
       {% block backhome %}
       {% end %}
       <!-- Title -->
-      <a href="/" title="{{ title }}" class="title-link-real">
-        <i class="material-icons">home</i>
-      </a>
-      <a href="#" title="{{ title }}" class="title-link">
+      <a href="/" title="{{ title }}" class="title-link">
         <span class="mdl-layout-title">{% if len(title) < 15 %} {{ title }} {% else %} {{ title[:15] }}... {% end %}</span>
       </a>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
+      <nav class="mdl-navigation large-screen-only ">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="add">
           <i class="material-icons">add</i>
         </button>
@@ -58,7 +56,6 @@
     </div>
     {% block tabs%}
     {% end %}
-
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Python 头条</span>

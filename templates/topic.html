@@ -1,0 +1,11 @@
+{% extends "home.html" %}
+
+{% block home_main_tag %}
+<topic></topic>
+{% end %}
+{% block home_main_script %}
+<script type="riot/tag" src="{{ static_url('tags/topic.tag') }}" ></script>
+<script>
+riot.mount('topic', {});
+</script>
+{% end %}

@@ -28,37 +28,19 @@ a.title-link span{
   font-size: 1.5em;
 }
 
-.mdl-demo .mdl-layout__tab-bar-button {
-  display: none;
-}
-.mdl-demo .mdl-layout.is-small-screen .mdl-layout__tab-bar .mdl-button {
-  display: none;
-}
-.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar,
-.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar-container {
-  overflow: visible;
-}
-.mdl-layout__tab-bar-container {
-  overflow: visible;
-}
-.mdl-demo .mdl-layout__tab-bar-container {
+/*tab_bar*/
+.header-tabs {
   height: 45px;
-}
-.mdl-demo .mdl-layout__tab-bar {
-  padding: 0;
+  padding: 0px;
   padding-left: 45px;
-  box-sizing: border-box;
-  height: 100%;
-  width: 100%;
 }
-.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
-  height: 45px;
-  line-height: 45px;
+.header-tabs nav a span {
+  padding: 10px;
 }
-.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
-  height: 4px;
+a.is_active span {
+  font-weight: 900;
+  border-bottom: 4px solid #fff;
 }
-
 /* msg box */
 .msg-spinner-container {
   text-align: center;
@@ -107,6 +89,8 @@ ul.mdl-mega-footer__link-list li a i{
 }
 @media only screen and (max-width:851px){
   .mdl-layout__header-row { padding-left: 50px;}
+  .header-tabs {padding-left: 0px; margin: 0 auto;}
+  .large-screen-only {display: none;}
 }
 
 div.action-btns {

@@ -10,6 +10,7 @@ class BaseController(tornado.web.RequestHandler):
     @property
     def default_data(self):
         return dict(
+            title="首页",
             login_url = self.application.github.login_url,
             uid = self.get_secure_cookie('uid'),
             nick = self.get_secure_cookie('nick'),

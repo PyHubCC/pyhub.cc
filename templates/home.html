@@ -2,33 +2,26 @@
 
 {% block tabs%}
 <!-- Tabs -->
-<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-  <a href="#share" class="mdl-layout__tab is-active">实时热门</a>
-  <a href="#pin" class="mdl-layout__tab">每日推荐</a>
-  <a href="#topic" class="mdl-layout__tab">专题分类</a>
+<!-- Bottom row, not visible on scroll -->
+<div class="mdl-layout__header-row header-tabs">
+  <!-- Navigation -->
+  <nav class="mdl-navigation">
+    <a class="mdl-navigation__link {%if page == 'share' %} is_active {%end%}" href="/"><span>实时热门</span></a>
+    <a class="mdl-navigation__link{%if page == 'pin' %} is_active {%end%}" href="/pin"><span>每日推荐</span></a>
+    <a class="mdl-navigation__link{%if page == 'topic' %} is_active {%end%}" href="/topic"><span>专题分类</span></a>
+  </nav>
 </div>
-
 {% end %}
 
 {% block content %}
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--2-col"></div>
   <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-    <section class="mdl-layout__tab-panel is-active" id="share">
-      <div class="page-content">
-        <share></share>
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel " id="pin">
-      <div class="page-content">
-        <pin></pin>
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="topic">
-      <div class="page-content">
-        <topic></topic>
-      </div>
-    </section>
+    <div class="page-content">
+    {% block home_main_tag %}
+      <!-- share/pin/topic tag -->
+    {% end %}
+    </div>
   </div>
   <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-phone">
     <right-side></right-side>
@@ -42,24 +35,14 @@
 </div>
 <riot-footer></riot-footer>
 
-    <!-- <script type="riot/tag" src="{{ static_url('app.tag') }}" ></script> -->
-    <script type="riot/tag" src="{{ static_url('share.tag') }}" ></script>
-    <script type="riot/tag" src="{{ static_url('pin.tag') }}" ></script>
-    <script type="riot/tag" src="{{ static_url('topic.tag') }}" ></script>
-    <script type="riot/tag" src="{{ static_url('right-side.tag') }}" ></script>
-    <script type="riot/tag" src="{{ static_url('footer.tag') }}" ></script>
+    <script type="riot/tag" src="{{ static_url('tags/right-side.tag') }}" ></script>
+    <script type="riot/tag" src="{{ static_url('tags/footer.tag') }}" ></script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+
+    {% block home_main_script %}
+    {% end %}
+
     <script>
-        riot.mount('share', {
-            // links: JSON.parse('{% raw json %}'),
-            links: {% raw json %},
-            page_no: 1,
-            admin: {{ admin }},
-            uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
-            toast: window.toast,
-        })
-        riot.mount('pin',{});
-        riot.mount('topic',{});
         riot.mount('right-side', {
           users: {% raw users %},
           events: JSON.parse('{% raw events %}'),

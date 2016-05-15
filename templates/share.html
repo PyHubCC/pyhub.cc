@@ -1,0 +1,18 @@
+{% extends "home.html" %}
+
+{% block home_main_tag %}
+<share></share>
+{% end %}
+{% block home_main_script %}
+<script type="riot/tag" src="{{ static_url('tags/share.tag') }}" ></script>
+<script>
+  riot.mount('share', {
+      // links: JSON.parse('{% raw json %}'),
+      links: {% raw json %},
+      page_no: 1,
+      admin: {{ admin }},
+      uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
+      toast: window.toast,
+  })
+</script>
+{% end %}

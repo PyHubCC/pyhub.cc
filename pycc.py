@@ -20,7 +20,7 @@ define("env", default='dev', type=str)
 class Application(BaseApplication):
     def __init__(self):
         handlers = [
-            (r'/', HomeHandler),
+            (r'/(|pin|topic)', HomeHandler),
             (r'/u/(\w*)', UserPage),
             (r'/py/(\w+)', DetailHandler),
             (r'/logout', LogoutHandler),
@@ -42,9 +42,12 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('nick', 'Yushneng')
         self.set_secure_cookie('uid', 'rainyear')
 
-    async def get(self):
+    async def get(self, tab):
         if options.env == 'dev' :
             self.fake_login()
+        tab = tab or 'share'
+        if tab not in ['share', 'pin', 'topic']:
+            self.redirect('/404')
 
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
@@ -61,10 +64,11 @@ class HomeHandler(BaseController):
             uid = uid,
             admin = self.is_admin(),
             events=self.json_encode(events),
-            users=self.json_encode(users)
+            users=self.json_encode(users),
+            page = tab,
         )
 
-        self.render("home.html", **render_data)
+        self.render("{}.html".format(tab), **render_data)
 
     def post(self, *args, **kwargs):
         self.redirect("/")

@@ -1,0 +1,11 @@
+{% extends "home.html" %}
+
+{% block home_main_tag %}
+<pin></pin>
+{% end %}
+{% block home_main_script %}
+<script type="riot/tag" src="{{ static_url('tags/pin.tag') }}" ></script>
+<script>
+riot.mount('pin', {});
+</script>
+{% end %}
