@@ -121,3 +121,6 @@ div.qrcode-wraper {
   padding: 20px;
   text-align: center;
 }
+div#qrcode canvas {
+  display: none;
+}

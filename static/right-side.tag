@@ -8,7 +8,7 @@
   <div class="page-content mdl-list mdl-cell--10-col mdl-cell--12-col-phone card-join-pyhub-wrap">
     <div class="demo-card-square mdl-card mdl-shadow--2dp mdl-cell--12-col-phone">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><i class="material-icons">chat</i>  留言框</h2>
+        <h2 class="mdl-card__title-text"><i class="material-icons">chat</i>留言板</h2>
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-card__supporting-text msg-spinner-container" hide={ msg_loaded }>

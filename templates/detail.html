@@ -42,7 +42,9 @@
     <div class="page-content mdl-list mdl-cell--10-col mdl-cell--8-col-phone card-join-pyhub-wrap">
       <div class="mdl-card mdl-cell--12-col-phone mdl-shadow--4dp qrcode-wraper">
         <p>分享到微信：</p>
-        <div id="qrcode"></div>
+        <div id="qrcode">
+          <img src=""/>
+        </div>
       </div>
     </div>
     <!-- end wechat box -->
@@ -126,6 +128,7 @@
   <script>
     (function () {
       $('#qrcode').qrcode({width: 200, height: 200, text: window.location.href});
+      $('#qrcode img').attr('src', $('#qrcode canvas')[0].toDataURL("image/png"));
     })();
     riot.mount('riot-footer', {
       vultr: "{{ static_url('logo_onwhite.svg') }}",
