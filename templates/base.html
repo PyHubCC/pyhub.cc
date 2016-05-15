@@ -44,13 +44,9 @@
           <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
           {% else %}
           <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
-          <button id="menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-              for="menu-lower-right">
-            <li class="mdl-menu__item"><a href='/logout'>登出</a></li>
-          </ul>
+          <a href="/logout" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">exit_to_app</i>
+          </a>
           {% end %}
       </nav>
     </div>
