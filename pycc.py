@@ -124,9 +124,8 @@ class DetailHandler(BaseController):
         render_data = dict(
             title = link['title'],
             link  = link,
-            **self.default_data
         )
-        self.render('detail.html', **render_data)
+        self.render('detail.html', **{**render_data, **self.default_data})
 
 
 # '/share/page_no' => Share page
