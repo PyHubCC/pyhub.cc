@@ -40,7 +40,6 @@
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick={ load_more } id="btn_load_more">
       加载更多
   </button>
-
   <script>
   this.admin = opts.admin;
   this.page_no = opts.page_no;

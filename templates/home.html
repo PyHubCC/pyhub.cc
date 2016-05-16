@@ -15,12 +15,13 @@
 
 {% block content %}
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col"></div>
-  <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+  <!-- col-8 total -->
+  <div class="mdl-cell {% if page == 'topic' %} mdl-cell--1-col {% else %} mdl-cell--2-col {% end %}"></div>
+  <div class="mdl-cell {% if page == 'topic' %} mdl-cell--7-col {% else %} mdl-cell--6-col {% end %} mdl-cell--8-col-tablet mdl-cell--12-col-phone">
     <div class="page-content">
-    {% block home_main_tag %}
       <!-- share/pin/topic tag -->
-    {% end %}
+      {% block home_main_tag %}
+      {% end %}
     </div>
   </div>
   <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-phone">

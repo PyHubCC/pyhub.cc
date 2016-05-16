@@ -1,7 +1,7 @@
 <right-side>
   <!-- wechat box -->
-  <div class="page-content mdl-list mdl-cell--10-col mdl-cell--8-col-phone card-join-pyhub-wrap">
-    <div class="card-join-pyhub mdl-card mdl-cell--12-col-phone">
+  <div class="page-content mdl-list mdl-cell--10-col mdl-cell--4-col-phone card-join-pyhub-wrap">
+    <div class="card-join-pyhub mdl-card mdl-cell--8-col-phone">
     </div>
   </div>
   <!-- end wechat box -->
