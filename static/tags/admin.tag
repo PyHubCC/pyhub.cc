@@ -86,7 +86,7 @@
         };
         $.post('/admin', {'act': 'create_topic', 'data': JSON.stringify(data)}, function (res) {
           console.log(res);
-          // window.location = window.location.href;
+          window.location = window.location.href;
         });
       }
     }
