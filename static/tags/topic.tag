@@ -35,7 +35,7 @@
       </div>
       <div class="mdl-card__actions mdl-card--border topic-meta-info">
         <i class="material-icons">extension</i><span>{ count }</span>
-        <i class="material-icons">remove_red_eye</i><span>{ fav }</span>
+        <i class="material-icons">remove_red_eye</i><span>{ favs }</span>
       </div>
     </div>
   </div>

@@ -1,13 +1,40 @@
 {% extends "base.html"  %}
 
+{% block tabs %}
+<!-- Tabs -->
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#users" class="mdl-layout__tab ">用户</a>
+  <a href="#links" class="mdl-layout__tab">链接</a>
+  <a href="#topics" class="mdl-layout__tab is-active">专题</a>
+</div>
+{% end %}
 {% block content %}
-
-    <admin></admin>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col"></div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel " id="users">
+          <users></users>
+        </section>
+        <section class="mdl-layout__tab-panel" id="links">
+          <links></links>
+        </section>
+        <section class="mdl-layout__tab-panel is-active" id="topics">
+          <topics></topics>
+        </section>
+      </main>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col"></div>
+</div>
 
     <script type="riot/tag" src="{{ static_url('tags/admin.tag') }}" ></script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
-        riot.mount('admin', {
-        })
+        riot.mount('users', {
+          users: {% raw users %},
+        });
+        riot.mount('topics', {
+          topic_metas: {% raw topic_metas %},
+        });
     </script>
 {% end %}

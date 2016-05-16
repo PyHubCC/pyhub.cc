@@ -43,7 +43,7 @@ class HomeHandler(BaseController):
         self.set_secure_cookie('uid', 'rainyear')
 
     async def get(self, tab):
-        if options.env == 'dev' :
+        if options.env == 'dev':
             self.fake_login()
         tab = tab or 'share'
         if tab not in ['share', 'pin', 'topic']:
@@ -55,6 +55,7 @@ class HomeHandler(BaseController):
         res = await self.application.db.get_links()
         events = await self.application.db.get_events()
         users = await self.application.db.get_new_users()
+        topic_metas = await self.application.db.get_topic_metas()
 
         render_data = dict(
             title='首页',
@@ -65,6 +66,7 @@ class HomeHandler(BaseController):
             admin = self.is_admin(),
             events=self.json_encode(events),
             users=self.json_encode(users),
+            topic_metas = self.json_encode(topic_metas),
             page = tab,
         )
 

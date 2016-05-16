@@ -149,6 +149,15 @@ class DB:
                 return await self.link_collection.insert(data)
             """
             return False
+
+    async def get_topic_metas(self, all=False):
+        query = {'public': True}
+        if all:
+            query = {}
+        topic_metas = []
+        async for m in self.topic_meta_collection.find(query).sort('rank', -1):
+            topic_metas.append(m)
+        return topic_metas
 class PyHub404(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         self.render('404.html')

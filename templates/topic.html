@@ -8,12 +8,7 @@
 <script src="https://cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
 <script>
 riot.mount('topic', {
-  topic_meta: [
-              {title: '基础知识', count: 12, fav: 1},
-              {title: '数据挖掘', count: 12, fav: 2},
-              {title: '网站框架', count: 12, fav: 4},
-              {title: '机器学习', count: 12, fav: 1},
-              {title: '爬虫技术', count: 23, fav: 2}],
+  topic_meta: {% raw topic_metas %},
   GP: GeoPattern,
 });
 </script>
