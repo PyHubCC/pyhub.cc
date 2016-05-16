@@ -7,6 +7,7 @@ from controller.helper import GitHub
 from bson import objectid
 from datetime import datetime
 import pytz
+import tornado.web
 __all__ = ['BaseApplication']
 _ROOT = os.path.dirname(__file__)
 ROOT_JOIN = lambda sub: os.path.join(_ROOT, sub)
@@ -19,9 +20,11 @@ class DB:
         self.user_collection = self.db[Env.COL_USER]
         self.event_collection = self.db[Env.COL_EVENT]
 
-        self.msg_collection = self.db['msg']
-        self.fav_collection = self.db['fav']
-        self.comment_collection = self.db['comment']
+        self.msg_collection = self.db[Env.COL_MSG]
+        self.fav_collection = self.db[Env.COL_FAV]
+        self.comment_collection = self.db[Env.COL_COMMENT]
+        self.topic_meta_collection = self.db[Env.COL_TOPIC_META]
+        self.topic_collection = self.db[Env.COL_TOPIC]
 
     @property
     def date(self):
@@ -146,6 +149,9 @@ class DB:
                 return await self.link_collection.insert(data)
             """
             return False
+class PyHub404(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        self.render('404.html')
 
 class BaseApplication(tornado.web.Application):
     def __init__(self, handlers):
@@ -155,6 +161,7 @@ class BaseApplication(tornado.web.Application):
             debug=True,
             cookie_secret=Env.COOKIE_SEC,
             admin_user=Env.ADMIN_USER,
+            default_handler_class=PyHub404
         )
         settings.update({'X-Spider-Key': Env.POST_KEY})
         super(BaseApplication, self).__init__(handlers=handlers, **settings)
