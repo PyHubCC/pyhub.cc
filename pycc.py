@@ -3,7 +3,6 @@ from __future__ import absolute_import
 import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
-from _config import Env
 from base import BaseApplication
 
 from controller import BaseController
@@ -20,9 +19,10 @@ define("env", default='dev', type=str)
 class Application(BaseApplication):
     def __init__(self):
         handlers = [
-            (r'/(|pin|topic)', HomeHandler),
+            (r'/(|pin|topics)', HomeHandler),
             (r'/u/(\w*)', UserPage),
             (r'/py/(\w+)', DetailHandler),
+            (r'/topic/(\S+)', TopicHandler),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
             (r'/web_hook/coding_git', WebHookHandler),
@@ -45,8 +45,14 @@ class HomeHandler(BaseController):
     async def get(self, tab):
         if options.env == 'dev':
             self.fake_login()
+
+        tabs = {
+            'share': '',
+            'pin': ' : 每日推荐',
+            'topics': ' : 专题分类',
+        }
         tab = tab or 'share'
-        if tab not in ['share', 'pin', 'topic']:
+        if tab not in ['share', 'pin', 'topics']:
             self.redirect('/404')
 
         nick = self.get_secure_cookie('nick')
@@ -58,7 +64,7 @@ class HomeHandler(BaseController):
         topic_metas = await self.application.db.get_topic_metas()
 
         render_data = dict(
-            title='首页',
+            title='首页' + tabs[tab],
             login_url=github_url,
             json=self.json_encode(res),
             nick=nick,
@@ -162,7 +168,7 @@ class LogoutHandler(BaseController):
         self.redirect("/")
 
 
-
+# '/new' => share a link
 class NewHandler(BaseController):
     def get(self, *args, **kwargs):
         nick = self.get_secure_cookie('nick')
@@ -200,6 +206,11 @@ class NewHandler(BaseController):
                 self.write(JSONEncoder().encode({'status': 302, 'msg': 'existed!'}))
             else:
                 self.write(JSONEncoder().encode({'status': 200, 'link': link}))
+
+# '/topic/slug' => topic page
+class TopicHandler(BaseController):
+    def get(self, slug):
+        self.write('topic {}'.format(slug))
 
 def main():
     options.parse_command_line()

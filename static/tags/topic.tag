@@ -29,7 +29,7 @@
   </div>
 
   <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp" each={ opts.topic_meta} style="background-image: {gen_geo(title)}" >
+    <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp topic-cell" each={ opts.topic_meta} style="background-image: {gen_geo(title, rank)}" onclick={goto}>
       <div class="mdl-card__title mdl-card--expand" >
         <h4>{ title }</h4>
       </div>
@@ -40,6 +40,7 @@
     </div>
   </div>
   <style>
+    .topic-cell {cursor: pointer;}
     .mdl-card__title h4 {color:#fff; font-weight: 800; text-shadow: 0 3px 0 rgba(0, 0, 0, .15)}
     .topic-meta-info {padding-left: 14px;}
     .topic-meta-info i{color: #eee; font-size: 16px; vertical-align:middle; margin-left: 2px;}
@@ -66,15 +67,21 @@
     	'mosaicSquares',
     	'chevrons'
     ];
-    this.gen_geo = function (title) {
+    this.gen_geo = function (title, rank) {
       var self = this;
       function getRandomArbitrary(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
       }
       return this.GP.generate(title, {
-        generator: self.PATTERNS[getRandomArbitrary(0, self.PATTERNS.length)],
+        // generator: self.PATTERNS[getRandomArbitrary(0, self.PATTERNS.length)],
+        generator: self.PATTERNS[rank],
       }).toDataUrl();
-    }
+    };
+    this.goto = function (e) {
+      var slug = e.item.slug;
+      console.log(slug);
+      window.location = '/topic/'+slug;
+    };
 
   </script>
 </topic>
