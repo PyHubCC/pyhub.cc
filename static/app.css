@@ -112,3 +112,11 @@ img.avatar-small {
   width: 36px;
   border-radius: 18px;
 }
+.avatar-card-title {
+  height: 250px;
+}
+.avatar-card-title h2 {
+  color: #fff;
+  font-weight: 900;
+  text-shadow: 0 1px 3px #333;
+}

@@ -208,3 +208,8 @@ class DB:
             timestamp = self.full_timestamp,
             balance = balance['points']
         ))
+    async def get_points_of_uid(self, uid, n = 50):
+        points = []
+        async for p in self.account_collection.find({'uid': uid}, {'_id': 0}).sort('timestamp', -1).limit(n):
+            points.append(p)
+        return points

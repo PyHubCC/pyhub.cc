@@ -1,12 +1,51 @@
 {% extends "base.html"  %}
 
+{% block tabs %}
+<!-- Tabs -->
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#favs" class="mdl-layout__tab is-active">收藏</a>
+  <a href="#share" class="mdl-layout__tab">分享</a>
+  {% if is_self %}
+  <a href="#account" class="mdl-layout__tab">积分</a>
+  {% end %}
+</div>
+{% end %}
+
 {% block content %}
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--2-col"></div>
   <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-    <fav-list></fav-list>
+    <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active" id="favs">
+        <fav-list></fav-list>
+      </section>
+      {% if is_self %}
+      <section class="mdl-layout__tab-panel " id="account">
+        <points></points>
+      </section>
+      {% end %}
+    </main>
   </div>
-  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--2-col">
+    <div class="page-content mdl-list mdl-cell--10-col mdl-cell--4-col-phone card-join-pyhub-wrap">
+      <div class="mdl-card mdl-cell--8-col-phone mdl-shadow--2dp avatar-card-title" >
+        <div class="mdl-card__title mdl-card--expand" style="background: url('{{user['avatar']}}') center / cover;">
+          <h2 class="mdl-card__title-text">{{ user['nick'] }}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          加入时间：{{ user['date'] }}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#account">
+            积分：{{ user['points'] }} <i>Py</i>
+          </a>
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="https://github.com/{{user['uid']}}" target="_blank">
+            <i class="material-icons">link</i> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
   <script type="riot/tag">
     <fav-list>
@@ -50,6 +89,37 @@
       }
     </fav-list>
   </script>
+  <script type='riot/tag'>
+    <points>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>描述</th>
+            <th>数额</th>
+            <th>余额</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr each={points}>
+            <td style="color:{ points > 0 ? 'black' : 'red'}">{timestamp}</td>
+            <td style="color:{ points > 0 ? 'black' : 'red'}">{action}</td>
+            <td style="color:{ points > 0 ? 'black' : 'red'}">{points}</td>
+            <td style="color:{ points > 0 ? 'black' : 'red'}">{balance}</td>
+          </tr>
+        </tbody>
+      </table>
+    // js
+    this.points = [];
+    this.on('mount', function () {
+      var self = this;
+      $.post('/api/v1/points', {}, function (res) {
+        self.points = res.points;
+        self.update();
+      });
+    });
+    </points>
+  </script>
   <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
   <script>
     riot.mount('fav-list', {
@@ -57,5 +127,8 @@
       page_no: 1,
       is_self: {% raw is_self %}
     });
+    {% if is_self %}
+    riot.mount('points', {})
+    {% end %}
   </script>
 {% end %}

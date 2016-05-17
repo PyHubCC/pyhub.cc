@@ -114,3 +114,12 @@ class FavHandler(BaseController):
                 self.write({'status': 403})
             await self.application.db.del_link(link_id)
         self.write(self.json_encode({'status': 200}))
+
+# '/api/v1/points' => Points api
+class APIPoints(BaseController):
+    async def post(self, *args, **kwargs):
+        uid = self.get_secure_cookie('uid')
+        if not uid:
+            self.write({'status': 403})
+        points = await self.application.db.get_points_of_uid(uid.decode())
+        self.write(dict(points=points))

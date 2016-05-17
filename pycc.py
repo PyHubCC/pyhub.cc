@@ -7,7 +7,7 @@ from base import BaseApplication
 
 from controller import BaseController
 from controller.helper import JSONEncoder
-from controller.api import APIPost, MsgPost, WebHookHandler, CommentAPI, FavHandler
+from controller.api import APIPost, MsgPost, WebHookHandler, CommentAPI, FavHandler, APIPoints
 from controller.admin import AdminController
 import re
 
@@ -33,7 +33,8 @@ class Application(BaseApplication):
             (r'/new', NewHandler),
             (r'/api/v1/post_data', APIPost),
             (r'/api/v1/msg', MsgPost),
-            (r'/api/v1/comment/(\w*)', CommentAPI)
+            (r'/api/v1/comment/(\w*)', CommentAPI),
+            (r'/api/v1/points', APIPoints)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
@@ -101,6 +102,7 @@ class UserPage(BaseController):
             login_url=self.application.github.login_url,
             uid=cuid,
             nick=self.get_secure_cookie('nick'),
+            user=user,
 
             favs = self.json_encode(favs),
             is_self=is_self,
