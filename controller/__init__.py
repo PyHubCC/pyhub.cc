@@ -78,6 +78,6 @@ class BaseController(tornado.web.RequestHandler):
             avatar = user.get('avatar_url'),
             email = user.get('email'),
             admin= 0,
-            points=0,
+            points=20,
             date = datetime.today().strftime("%Y-%m-%d")
         )
