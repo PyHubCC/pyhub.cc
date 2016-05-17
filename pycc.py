@@ -20,7 +20,7 @@ class Application(BaseApplication):
     def __init__(self):
         handlers = [
             (r'/(|pin|topics)', HomeHandler),
-            (r'/u/(\w*)', UserPage),
+            (r'/u/(\S+)', UserPage),
             (r'/py/(\w+)', DetailHandler),
             (r'/topic/(\S+)', TopicHandler),
             (r'/logout', LogoutHandler),
