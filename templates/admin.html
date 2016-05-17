@@ -6,6 +6,7 @@
   <a href="#users" class="mdl-layout__tab ">用户</a>
   <a href="#links" class="mdl-layout__tab">链接</a>
   <a href="#topics" class="mdl-layout__tab is-active">专题</a>
+  <a href="#account" class="mdl-layout__tab">积分</a>
 </div>
 {% end %}
 {% block content %}
@@ -22,6 +23,9 @@
         <section class="mdl-layout__tab-panel is-active" id="topics">
           <topics></topics>
         </section>
+        <section class="mdl-layout__tab-panel" id="account">
+          <account></account>
+        </section>
       </main>
     </div>
     <div class="mdl-cell mdl-cell--2-col"></div>
@@ -35,6 +39,9 @@
         });
         riot.mount('topics', {
           topic_metas: {% raw topic_metas %},
+        });
+        riot.mount('account', {
+          account_metas: {% raw account_metas %},
         });
     </script>
 {% end %}

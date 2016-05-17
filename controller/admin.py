@@ -10,10 +10,12 @@ class AdminController(BaseController):
             self.redirect('/403')
         users = await self.application.db.get_new_users(n=50)
         topic_metas = await self.application.db.get_topic_metas(all=True)
+        account_metas = self.application.db.get_account_metas()
         render_data = dict(
             title = 'PyHub Admin',
             topic_metas = self.json_encode(topic_metas),
-            users = self.json_encode(users)
+            users = self.json_encode(users),
+            account_metas = self.json_encode(account_metas)
         )
         self.render("admin.html", **{**self.default_data, **render_data})
 

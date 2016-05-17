@@ -8,9 +8,11 @@
     </li>
   </ul>
 </users>
+
 <links>
 
 </links>
+
 <topics>
   <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
     <thead>
@@ -92,3 +94,23 @@
     }
   </script>
 </topics>
+
+<account>
+  <table class="mdl-data-table  mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th>说明</th>
+        <th>积分变化</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr each={account_metas}>
+        <td style="color:{acc < 0 ? 'red' : 'black'}">{info}</td>
+        <td style="color:{acc < 0 ? 'red' : 'black'}">{acc}</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    this.account_metas = opts.account_metas;
+  </script>
+</account>
