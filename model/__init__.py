@@ -66,6 +66,9 @@ class DB:
         await self.link_collection.update({'_id': objectid.ObjectId(link_id)},
                                           {'$inc': {'comments': 1}})
 
+        # ACCOUNT ACTION
+        await self.update_account(uid, "评论")
+
     async def get_new_msgs(self, n=5):
         msgs = []
         async for m in self.msg_collection.find({}).sort('date', -1).limit(n):
@@ -80,6 +83,9 @@ class DB:
             timestamp = self.timestamp
         )
         await self.msg_collection.insert(msg)
+
+        # ACCOUNT ACTION
+        await self.update_account(uid, "留言")
         return msg
 
     async def get_user_by_uid(self, uid):
