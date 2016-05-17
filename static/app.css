@@ -108,3 +108,7 @@ div.qrcode-wraper {
 div#qrcode canvas {
   display: none;
 }
+img.avatar-small {
+  width: 36px;
+  border-radius: 18px;
+}

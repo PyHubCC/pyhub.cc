@@ -61,9 +61,21 @@
           <h2 class="mdl-card__title-text"><i class="material-icons">account_box</i>New Pythoners</h2>
         </div>
           <div class="mdl-card__actions mdl-card--border">
-              <div class="mdl-card__supporting-text" each={ opts.users }>
-                <span class="devicons devicons-python pythoners"></span> <a href='https://github.com/{uid}' target='_blank'>{ nick }</a>
-              </div>
+            <ul class="demo-list-two mdl-list">
+              <li class="mdl-list__item mdl-list__item--two-line" each={ opts.users }>
+                <span class="mdl-list__item-primary-content">
+                  <a href="/u/{uid}" >
+                    <img src="{avatar}" class="mdl-list__item-avatar avatar-small"/>
+                    <span>{nick}</span>
+                  </a>
+                  <span class="mdl-list__item-sub-title">{date}</span>
+                </span>
+                <span class="mdl-list__item-secondary-content">
+                  <span class="mdl-list__item-secondary-info">{ points } <i>Py</i>
+                  </span>
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
