@@ -14,6 +14,7 @@ class BaseController(tornado.web.RequestHandler):
             login_url = self.application.github.login_url,
             uid = self.get_secure_cookie('uid'),
             nick = self.get_secure_cookie('nick'),
+            avatar = self.get_secure_cookie('avatar'),
         )
     def json_encode(self, obj):
         return JSONEncoder().encode(obj)
@@ -53,6 +54,7 @@ class BaseController(tornado.web.RequestHandler):
             thumb = '',
             author = '雨神',
             via_uid = 'rainyear',
+            via_avatar = self.application.settings.get('default_avatar'),
             rank   = 1,
             public = True,
             favs = 1,

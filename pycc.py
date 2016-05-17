@@ -161,6 +161,7 @@ class OAuthGitHubHandler(BaseController):
                 await self.application.db.save_user(user)
                 self.set_secure_cookie('nick', user['nick'])
                 self.set_secure_cookie('uid', user['uid'])
+                self.set_secure_cookie('avatar', user['avatar'])
                 self.redirect("/")
             else:
                 self.write("授权失败!".format(access_token))
@@ -204,6 +205,7 @@ class NewHandler(BaseController):
                 abstract = abstract,
                 via = self.get_secure_cookie('nick').decode(),
                 via_uid = self.get_secure_cookie('uid').decode(),
+                via_avatar = self.get_secure_cookie('avatar').decode(),
             ))
             success = await self.application.db.save_link(data)
             if not success:

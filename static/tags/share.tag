@@ -10,19 +10,24 @@
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-grid">
               <div class="mdl-grid action-btns">
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--4-col-tablet">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--3-col-tablet">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" link-id={ _id } onclick={ vote }>
                       <i class="material-icons">{ is_faved() }</i> { favs }
                   </a>
                 </div>
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--4-col-tablet">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--3-col-tablet">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/py/{ _id }">
                     <i class="material-icons">share</i>
                   </a>
                 </div>
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--4-col-tablet">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--3-col-tablet">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/py/{ _id }">
                     <i class="material-icons">textsms</i> { comments || 0 }
+                  </a>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--hide-phone mdl-cell--3-col-tablet">
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/u/{via_uid}">
+                    <img src="{via_avatar} " class="avatar-square"/>
                   </a>
                 </div>
               </div>

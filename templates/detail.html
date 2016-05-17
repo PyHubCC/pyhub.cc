@@ -39,9 +39,14 @@
       </div>
       <div class="mdl-card__actions mdl-card--border mdl-grid">
         <div class="mdl-grid action-btns">
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+          <div class="mdl-cell mdl-cell--6-col">
             <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick={ vote }>
                 <i class="material-icons">{ is_faved() }</i> { link.favs }
+            </a>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/u/{link.via_uid}">
+              <img src="{link.via_avatar} " class="avatar-square"/>
             </a>
           </div>
         </div>

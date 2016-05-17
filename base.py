@@ -20,7 +20,8 @@ class BaseApplication(tornado.web.Application):
             debug=True,
             cookie_secret=Env.COOKIE_SEC,
             admin_user=Env.ADMIN_USER,
-            default_handler_class=PyHub404
+            default_handler_class=PyHub404,
+            default_avatar = Env.AVATAR,
         )
         settings.update({'X-Spider-Key': Env.POST_KEY})
         super(BaseApplication, self).__init__(handlers=handlers, **settings)
