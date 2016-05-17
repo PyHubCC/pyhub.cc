@@ -92,7 +92,7 @@ class DB:
             events.append(e)
         return events
     async def get_link_by_id(self, link_id):
-        return await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)})
+        return await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)}, {'public': 0})
     async def del_link(self, link_id):
         await self.link_collection.update({'_id': objectid.ObjectId(link_id)},
                                           {'$set': {'public': False}})

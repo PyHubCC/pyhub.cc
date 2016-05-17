@@ -127,6 +127,7 @@ class DetailHandler(BaseController):
         if not link_id:
             self.redirect('/404')
         link = await self.application.db.get_link_by_id(link_id)
+        link['_id'] = str(link['_id'])
         if not link:
             self.redirect('/404')
         render_data = dict(
@@ -199,7 +200,8 @@ class NewHandler(BaseController):
                 link = link,
                 title = title,
                 abstract = abstract,
-                via = self.get_secure_cookie('nick').decode()
+                via = self.get_secure_cookie('nick').decode(),
+                via_uid = self.get_secure_cookie('uid').decode(),
             ))
             success = await self.application.db.save_link(data)
             if not success:

@@ -42,6 +42,7 @@ class BaseController(tornado.web.RequestHandler):
             date:
             link:
             via:
+            via_uid:
             public:
         }
         """
@@ -51,6 +52,7 @@ class BaseController(tornado.web.RequestHandler):
             host = urlparse(data['link']).netloc,
             thumb = '',
             author = '雨神',
+            via_uid = 'rainyear',
             rank   = 1,
             public = True,
             favs = 1,
