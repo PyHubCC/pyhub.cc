@@ -84,9 +84,11 @@ class HomeHandler(BaseController):
 # '/u/uid' => User Page
 class UserPage(BaseController):
     async def get(self, uid):
-        cuid = self.get_secure_cookie('uid').decode()
+        cuid = self.get_secure_cookie('uid')
+        if cuid is not None:
+            cuid = cuid.decode()
         if not uid:
-            self.redirect("/u/{}".format(cuid))
+            self.redirect("/404")
         user = await self.application.db.get_user_by_uid(uid)
         is_self = 0
         if not user:

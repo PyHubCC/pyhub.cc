@@ -121,7 +121,7 @@ class DB:
 
         # ACCOUNT ACTION
         via = await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)})
-        self.update_account(via.get('via_uid'), '分享链接被移除')
+        await self.update_account(via.get('via_uid'), '分享链接被移除')
 
 
     async def fav_link(self, link_id, uid):
