@@ -21,6 +21,7 @@ class Application(BaseApplication):
         handlers = [
             (r'/(|pin|topics)', HomeHandler),
             (r'/u/(\S+)', UserPage),
+            (r'/topusers', TopUserHandler),
             (r'/py/(\w+)', DetailHandler),
             (r'/topic/(\S+)', TopicHandler),
             (r'/logout', LogoutHandler),
@@ -219,6 +220,15 @@ class NewHandler(BaseController):
 class TopicHandler(BaseController):
     def get(self, slug):
         self.write('topic {}'.format(slug))
+# '/topusers' => 排行
+class TopUserHandler(BaseController):
+    async def get(self):
+        topusers = await self.application.db.get_top_users()
+        render_data = dict(
+            title='用户排行榜',
+            topusers = topusers,
+        )
+        self.render('topuser.html', **{**self.default_data, **render_data})
 
 def main():
     options.parse_command_line()

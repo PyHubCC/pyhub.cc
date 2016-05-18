@@ -36,7 +36,7 @@
           加入时间：{{ user['date'] }}
         </div>
         <div class="mdl-card__actions mdl-card--border">
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#account">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/topusers">
             积分：{{ user['points'] }} <i>Py</i>
           </a>
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="https://github.com/{{user['uid']}}" target="_blank">
@@ -94,7 +94,7 @@
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
           <tr>
-            <th>时间</th>
+            <th class="large-screen-only">时间</th>
             <th>描述</th>
             <th>数额</th>
             <th>余额</th>
@@ -102,7 +102,7 @@
         </thead>
         <tbody>
           <tr each={points}>
-            <td style="color:{ points > 0 ? 'black' : 'red'}">{timestamp}</td>
+            <td class="large-screen-only" style="color:{ points > 0 ? 'black' : 'red'}">{timestamp}</td>
             <td style="color:{ points > 0 ? 'black' : 'red'}">{action}</td>
             <td style="color:{ points > 0 ? 'black' : 'red'}">{points}</td>
             <td style="color:{ points > 0 ? 'black' : 'red'}">{balance}</td>

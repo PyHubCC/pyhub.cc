@@ -102,7 +102,7 @@ class DB:
         return users
     async def get_top_users(self, n=10):
         users=[]
-        async for u in self.user_collection.find({}).sort('date', 1).limit(n):
+        async for u in self.user_collection.find({}).sort('points', -1).limit(n):
             users.append(u)
         return users
 
