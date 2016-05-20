@@ -121,7 +121,7 @@ class DB:
     async def get_pro_links_by_date(self, date=''):
         date = date or self.date
         links = []
-        async for l in self.link_collection.find({'$and': [{'promoted': 1}, {'promoted_date': date }]}):
+        async for l in self.link_collection.find({'$and': [{'promoted': 1}, {'promoted_date': date }]}).sort('rank', -1):
             l['_id'] = str(l['_id'])
             links.append(l)
         return links
