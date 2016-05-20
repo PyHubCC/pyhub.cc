@@ -59,7 +59,7 @@ ul.msg-list li.msg_list__item span {
   height: auto;
   max-width: 180px;
 }
-button#btn_load_more {
+#btn_load_more {
   width: 100%;
   height: 40px;
 }
@@ -108,10 +108,10 @@ div.qrcode-wraper {
 div#qrcode canvas {
   display: none;
 }
-img.avatar-small {
+/*img.avatar-small {
   width: 36px;
   border-radius: 18px;
-}
+}*/
 img.avatar-square {
   width: 30px;
 }

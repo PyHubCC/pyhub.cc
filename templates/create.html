@@ -1,51 +1,58 @@
 {% extends "base.html"  %}
 
 {% block content %}
-    <create-form></create-form>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--8-col">
+    <main class="mdl-layout__content mdl-cell--12-col">
+      <a href="/write" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='btn_load_more'>
+        <i class="material-icons">border_color</i> 投稿
+      </a>
+      <section class="mdl-layout__tab-panel is-active" id="link">
+        <create-form></create-form>
+      </section>
+    </main>
+  </div>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--12-col-phone"></div>
+</div>
     <script type="riot/tag">
       <create-form>
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col"></div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-              <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">分享与 Python 相关的链接：</h2>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <form>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="input_link" name="input_link" required>
-                    <label class="mdl-textfield__label" for="input_link">Link...<label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="input_title" name="input_title" required>
-                    <label class="mdl-textfield__label" for="input_title">Title...<label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="input_abstract" name="input_abstract" required></textarea>
-                    <label class="mdl-textfield__label" for="input_abstract">Abstract...</label>
-                  </div>
-                </form>
-
-              </div>
-              <div class="mdl-card__actions mdl-card--border">
-                <!-- Accent-colored raised button -->
-                <p>
-                  <div show={ loading } id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-                </p>
-                <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
-                  返回首页
-                </a>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
-                  清除
-                </button>
-                <button onclick={submit} class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled={ loading }>
-                  提交
-                </button>
-              </div>
-            </div>
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">分享与 Python 相关的链接：</h2>
           </div>
-          <div class="mdl-cell mdl-cell--2-col"></div>
+          <div class="mdl-card__supporting-text">
+            <form>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="input_link" name="input_link" required>
+                <label class="mdl-textfield__label" for="input_link">Link...<label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="input_title" name="input_title" required>
+                <label class="mdl-textfield__label" for="input_title">Title...<label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows="3" id="input_abstract" name="input_abstract" required></textarea>
+                <label class="mdl-textfield__label" for="input_abstract">Abstract...</label>
+              </div>
+            </form>
+
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <!-- Accent-colored raised button -->
+            <p>
+              <div show={ loading } id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            </p>
+            <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
+              返回首页
+            </a>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled={ loading }>
+              清除
+            </button>
+            <button onclick={submit} class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled={ loading }>
+              提交
+            </button>
+          </div>
         </div>
         <style>
           .mdl-card__actions{
@@ -104,6 +111,6 @@
     </script>
     <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
     <script>
-      riot.mount('create-form', {})
+      riot.mount('create-form', {});
     </script>
 {% end %}

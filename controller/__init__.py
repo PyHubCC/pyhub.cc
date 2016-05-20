@@ -40,6 +40,7 @@ class BaseController(tornado.web.RequestHandler):
         data format: {
             title:
             abstract:
+            date_int:
             date:
             link:
             via:
@@ -59,7 +60,8 @@ class BaseController(tornado.web.RequestHandler):
             public = True,
             favs = 1,
             favlist = [],
-            date = int(time.time())
+            date_int = int(time.time()),
+            date = datetime.today().strftime("%y-%m-%d")
         )
         link.update(data)
         return link

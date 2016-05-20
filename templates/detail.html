@@ -52,7 +52,8 @@
         </div>
       </div>
       this.link = opts.link;
-      this.date = ((new Date(this.link.date*1000)).toLocaleDateString());
+      var tmp_date = this.link.date.toString();
+      this.date = tmp_date.indexOf('-') == -1 ? ((new Date(tmp_date*1000)).toLocaleDateString()) : tmp_date;
       this.vote = function(e){
         if (opts.uid === undefined) {
           toast();

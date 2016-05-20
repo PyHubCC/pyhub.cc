@@ -5,3 +5,4 @@ _config.py
 __pycache__/
 db/
 upload.sh
+editor.md

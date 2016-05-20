@@ -9,10 +9,6 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="keywords" content="PyHub,Python 头条,Python开发者中心,Python开发者平台,Python开发者社区,程序员,极客,技术,开源,编程" />
-
-    {% block metas %}
-    {% end %}
-
     <link rel="alternate icon" type="image/png" href="{{ static_url('snakex64.ico') }}" />
     <link rel="apple-touch-icon" href="{{ static_url('snake.ico') }}" />
     <link href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css" rel="stylesheet">
@@ -21,6 +17,8 @@
     <link href="{{ static_url('app.css') }}" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/material-design-lite/1.1.1/material.min.js"></script>
+    {% block metas %}
+    {% end %}
 </head>
 <body id="top">
 <!-- Always shows a header, even in smaller screens. -->

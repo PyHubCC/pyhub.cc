@@ -24,12 +24,17 @@ class DB:
 
         self.account_collection = self.db[Env.COL_ACCOUNT]
 
+        self.Env = Env
+
+
+    def is_admin(self, uid):
+        return uid == self.Env.ADMIN_USER
     @property
     def date(self):
         """
-        MM/DD
+        YYYY-MM-DD
         """
-        return datetime.today().strftime("%m/%d")
+        return datetime.today().strftime("%Y-%m-%d")
     @property
     def timestamp(self):
         """
@@ -113,6 +118,13 @@ class DB:
         async for e in self.event_collection.find({}).sort('timestamp', -1).limit(3):
             events.append(e)
         return events
+    async def get_pro_links_by_date(self, date=''):
+        date = date or self.date
+        links = []
+        async for l in self.link_collection.find({'$and': [{'promoted': 1}, {'promoted_date': date }]}):
+            l['_id'] = str(l['_id'])
+            links.append(l)
+        return links
     async def get_link_by_id(self, link_id):
         return await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)}, {'public': 0})
     async def del_link(self, link_id):
@@ -123,6 +135,13 @@ class DB:
         via = await self.link_collection.find_one({'_id': objectid.ObjectId(link_id)})
         await self.update_account(via.get('via_uid'), '分享链接被移除')
 
+    async def pro_link(self, link_id, uid):
+        await self.link_collection.update({'_id': objectid.ObjectId(link_id)},
+                                          {'$set': {'promoted': 1, 'promoted_date': self.date}})
+
+        if not self.is_admin(uid):
+            # ACCOUNT ACTION
+            await self.update_account(uid, '选入每日推荐')
 
     async def fav_link(self, link_id, uid):
         exist = await self.get_link_by_id(link_id)

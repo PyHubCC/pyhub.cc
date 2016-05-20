@@ -26,12 +26,14 @@ class Application(BaseApplication):
             (r'/topic/(\S+)', TopicHandler),
             (r'/logout', LogoutHandler),
             (r'/share/([0-9]*)', ShareHandler),
+            (r'/more_pin/(\S+)', MorePinHandler),
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
             (r'/act/(\w+)', FavHandler),
             (r'/admin', AdminController),
             (r'/new', NewHandler),
+            (r'/write/?(\w*)', WriteHandler),
             (r'/api/v1/post_data', APIPost),
             (r'/api/v1/msg', MsgPost),
             (r'/api/v1/comment/(\w*)', CommentAPI),
@@ -60,7 +62,8 @@ class HomeHandler(BaseController):
         nick = self.get_secure_cookie('nick')
         uid  = self.get_secure_cookie('uid')
         github_url = self.application.github.login_url
-        res = await self.application.db.get_links()
+
+
         events = await self.application.db.get_events()
         users = await self.application.db.get_new_users()
         topic_metas = await self.application.db.get_topic_metas()
@@ -68,7 +71,6 @@ class HomeHandler(BaseController):
         render_data = dict(
             title='首页' + tabs[tab],
             login_url=github_url,
-            json=self.json_encode(res),
             nick=nick,
             uid = uid,
             admin = self.is_admin(),
@@ -78,10 +80,23 @@ class HomeHandler(BaseController):
             page = tab,
         )
 
+        links = []
+        if tab == 'share':
+            links = await self.application.db.get_links()
+        elif tab == 'pin':
+            links = await self.application.db.get_pro_links_by_date()
+        render_data['json'] = self.json_encode(links)
+
         self.render("{}.html".format(tab), **render_data)
 
-    def post(self, *args, **kwargs):
-        self.redirect("/")
+    async def post(self, tab):
+        if tab == 'pin':
+            date = self.get_body_argument('date')
+            links = await self.application.db.get_pro_links_by_date(date)
+            self.write({'links': links})
+        else:
+            self.write({'status': 404})
+
 # '/u/uid' => User Page
 class UserPage(BaseController):
     async def get(self, uid):
@@ -142,12 +157,18 @@ class DetailHandler(BaseController):
         self.render('detail.html', **{**self.default_data, **render_data})
 
 
-# '/share/page_no' => Share page
+# '/share/page_no' => Load more shares
 class ShareHandler(BaseController):
     async def post(self, page_no):
         page_no = int(page_no)
         res = await self.application.db.get_links(page_no=page_no)
         self.write(JSONEncoder().encode(res))
+# '/more_pin/date' => Load more pins
+class MorePinHandler(BaseController):
+    async def post(self, date):
+        print(date)
+        links = await self.application.db.get_pro_links_by_date(date)
+        self.write(dict(links = links))
 
 # '/oauth/github' => login with GitHub
 class OAuthGitHubHandler(BaseController):
@@ -229,6 +250,19 @@ class TopUserHandler(BaseController):
             topusers = topusers,
         )
         self.render('topuser.html', **{**self.default_data, **render_data})
+# '/write' => 创作
+class WriteHandler(BaseController):
+    async def get(self, page_id):
+
+        topics = await self.application.db.get_topic_metas()
+        render_data = dict(
+            topics =  topics,
+            title = '投稿'
+        )
+        self.render('write.html', **{**self.default_data, **render_data})
+    async def post(self, *args, **kwargs):
+
+        pass
 
 def main():
     options.parse_command_line()

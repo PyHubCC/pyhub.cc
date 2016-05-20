@@ -1,0 +1,89 @@
+{% extends "base.html"  %}
+
+{% block metas %}
+<link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/simplemde/1.10.1/simplemde.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/simplemde/1.10.1/simplemde.min.js"></script>
+{% end %}
+
+{% block content %}
+<div style="padding:12px;">
+  <div id="form">
+    <div class="mdl-textfield mdl-js-textfield">
+      <input class="mdl-textfield__input" type="text" id="title" required />
+      <label class="mdl-textfield__label" for="sample1">输入标题</label>
+    </div>
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="discuss">
+      <input type="radio" id="discuss" class="mdl-radio__button" name="options" value="discuss" checked>
+      <span class="mdl-radio__label">发起讨论</span>
+    </label>
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="topic">
+      <input type="radio" id="topic" class="mdl-radio__button" name="options" value="topic">
+      <span class="mdl-radio__label">专题投稿</span>
+    </label>
+    <div id="topic-metas" style="display:none">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="site" />
+        <label class="mdl-textfield__label" for="site">官方主页...</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="github" />
+        <label class="mdl-textfield__label" for="github">GitHub...</label>
+      </div>
+      {% for topic in topics %}
+      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="{{ topic['slug'] }}">
+        <input type="radio" data-title="{{ topic['title'] }}" id="{{ topic['slug'] }}" class="mdl-radio__button" name="topics" value="{{ topic['slug'] }}" >
+        <span class="mdl-radio__label">{{ topic['title'] }}</span>
+      </label>
+      {% end %}
+    </div>
+    <textarea class="mdl-textfield__input" type="text" id="markdown"></textarea>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='btn_load_more' {% if not uid %} disabled {% end %}>
+      <i class="material-icons">border_color</i> 提交
+    </button>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var simplemde = new SimpleMDE({
+      autoDownloadFontAwesome: false,
+      autofocus: true,
+      element: document.getElementById("markdown"),
+    });
+    $('input[name=options]').on('change', function (e) {
+      $("#topic-metas").toggle();
+      return true;
+    });
+    $('#btn_load_more').on('click', function(e){
+      var page_type = $('input[name="options"]').filter(':checked').val();
+      var title = $('#title').val();
+      var content = simplemde.value();
+      var metas = {
+        site: $('#site').val(),
+        github: $('#github').val(),
+        topic_slug: $('input[name="topics"]').filter(':checked').val(),
+        topic_title: $('input[name="topics"]').filter(':checked').attr('data-title'),
+      };
+      if(title.length * content.length === 0){
+        alert("内容和标题不能为空！");
+      } else {
+        if (page_type === 'topic') {
+          if (metas['site'].length * metas['github'].length || metas['topic_slug'] === undefined ) {
+            alert("请填写正确的专题信息！");
+            return;
+          }
+        }
+        // $.post('/write', {
+        //   title: title,
+        //   content: content,
+        //   page_type: page_type,
+        //   metas: metas,
+        // }, function (res) {
+        //   console.log(res);
+        // });
+      }
+    });
+  });
+</script>
+{% end %}

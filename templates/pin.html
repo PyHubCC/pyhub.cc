@@ -6,6 +6,11 @@
 {% block home_main_script %}
 <script type="riot/tag" src="{{ static_url('tags/pin.tag') }}" ></script>
 <script>
-riot.mount('pin', {});
+riot.mount('pin', {
+    links: {% raw json %},
+    admin: {{ admin }},
+    uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
+    toast: window.toast,
+})
 </script>
 {% end %}

@@ -109,6 +109,8 @@ class FavHandler(BaseController):
         action = self.get_body_argument('action')
         if action == 'FAV':
             await self.application.db.fav_link(link_id, uid)
+        elif action == 'PRO':
+            await self.application.db.pro_link(link_id, uid)
         elif action == 'DEL':
             if not self.is_admin():
                 self.write({'status': 403})

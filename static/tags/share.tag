@@ -34,6 +34,9 @@
             </div>
 
             <div class="mdl-card__menu" show={ admin }>
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick={ promote }>
+                <i class="material-icons">{ is_promoted() }</i>
+              </button>
               <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick={ unpublic }>
                 <i class="material-icons">delete</i>
               </button>
@@ -77,6 +80,9 @@
   this.is_faved = function() {
     return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
   }
+  this.is_promoted = function () {
+    return this.promoted === undefined || !this.promoted ? 'star_border' : 'star';
+  }
   this.load_more = function(e){
     var self = this;
     this.page_no += 1;
@@ -97,8 +103,19 @@
       })
     }
   }
-  this.body_clicked = function (e) {
-    alert(e)
+  this.promote = function (e) {
+    var self = this;
+    if (this.promoted) {
+      toast('已推荐！');
+      return;
+    }
+    e.preventUpdate = true;
+    if (confirm('推荐 《'+ this.title +'》 ？')) {
+      $.post('/act/'+self._id, {'action': 'PRO'}, function (json) {
+        self.promoted = true;
+        self.update();
+      })
+    }
   }
   </script>
 </share>
