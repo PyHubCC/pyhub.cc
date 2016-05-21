@@ -17,14 +17,6 @@
     <link href="{{ static_url('app.css') }}" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/material-design-lite/1.1.1/material.min.js"></script>
-    <script>
-      window._G = {
-        title: '{{title}} - Python头条',
-        link: window.location.href,
-        desc: '',
-        imgUrl: "{{ static_url('pyhub-logo-328x328.png') }}",
-      }
-    </script>
     {% block metas %}
     {% end %}
 </head>
@@ -83,7 +75,6 @@
   <div class="mdl-snackbar__text" ></div>
   <button class="mdl-snackbar__action" type="button"></button>
 </div>
-<script src="{{ static_url('weixin.js') }}"></script>
 <script>
 (function() {
   'use strict';

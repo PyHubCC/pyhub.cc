@@ -35,7 +35,17 @@ var JsLoader={
 };
 if(app.weixin){
   JsLoader.load('https://res.wx.qq.com/open/js/jweixin-1.0.0.js',function(){
-    // wx.onMenuShareTimeline(_G);
+    /*
+    wx.config({
+      debug: true,
+      appId: 'wx33c66c71ca39b7a5',
+      timestamp: (new Date()).getTime(),
+      nonceStr: 'random',
+      signature: '',
+      jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'],
+    });
+    */
+    wx.onMenuShareTimeline(_G);
     wx.onMenuShareAppMessage({
       imgUrl: "http://inews.gtimg.com/newsapp_ls/0/296985852_150120/0",
       success: function () {

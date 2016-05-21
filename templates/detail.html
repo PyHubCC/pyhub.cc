@@ -1,9 +1,6 @@
 {% extends "base.html"  %}
 {% block metas%}
-<script>
-  window._G['title'] = '{{ link["title"] }}';
-  window._G['desc'] = '{{ link["abstract"] }}';
-</script>
+<meta name="description" itemprop="description" content="{{ link['abstract'] }}" />
 {% end %}
 {% block content %}
 <div class="mdl-grid">
