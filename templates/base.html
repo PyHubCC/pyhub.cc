@@ -2,13 +2,13 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>{{title}} - Python 头条</title>
+    <title>{{title}} - Python头条</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <meta name="keywords" content="PyHub,Python 头条,Python开发者中心,Python开发者平台,Python开发者社区,程序员,极客,技术,开源,编程" />
+    <meta name="keywords" content="PyHub,Python头条,Python开发者中心,Python开发者平台,Python开发者社区,程序员,极客,技术,开源,编程" />
     <link rel="alternate icon" type="image/png" href="{{ static_url('snakex64.ico') }}" />
     <link rel="apple-touch-icon" href="{{ static_url('snake.ico') }}" />
     <link href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css" rel="stylesheet">
@@ -17,6 +17,14 @@
     <link href="{{ static_url('app.css') }}" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/material-design-lite/1.1.1/material.min.js"></script>
+    <script>
+      window._G = {
+        title: '{{title}} - Python头条',
+        link: window.location.href,
+        desc: '',
+        imgUrl: "{{ static_url('pyhub-logo-328x328.png') }}",
+      }
+    </script>
     {% block metas %}
     {% end %}
 </head>
@@ -75,6 +83,7 @@
   <div class="mdl-snackbar__text" ></div>
   <button class="mdl-snackbar__action" type="button"></button>
 </div>
+<script src="{{ static_url('weixin.js') }}"></script>
 <script>
 (function() {
   'use strict';

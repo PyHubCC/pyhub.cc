@@ -35,7 +35,7 @@ var JsLoader={
 };
 if(app.weixin){
   JsLoader.load('https://res.wx.qq.com/open/js/jweixin-1.0.0.js',function(){
-    alert(_G);
+    console.log(_G);
     wx.onMenuShareTimeline(_G);
     wx.onMenuShareAppMessage(_G);
   });

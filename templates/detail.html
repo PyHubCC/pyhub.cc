@@ -1,13 +1,15 @@
 {% extends "base.html"  %}
 {% block metas%}
-  <meta itemprop="image" content="{{ static_url('pyhub-logo-328x328.png') }}" />
+<script>
+  window._G['title'] = '{{ link["title"] }}';
+  window._G['desc'] = '{{ link["abstract"] }}';
+</script>
 {% end %}
 {% block content %}
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--2-col"></div>
   <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--12-col-phone">
     <div class="mdl-card mdl-shadow--4dp detail-content content">
-      <img src="{{ static_url('pyhub-logo-328x328.png') }}" width="0px"/>
       <detail></detail>
       <div class="mdl-card__actions mdl-card--border">
         <comments></comments>
