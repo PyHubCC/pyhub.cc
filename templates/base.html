@@ -12,7 +12,6 @@
     <link rel="alternate icon" type="image/png" href="{{ static_url('snakex64.ico') }}" />
     <link rel="apple-touch-icon" href="{{ static_url('snake.ico') }}" />
     <link href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css" rel="stylesheet">
-    <!-- <link href="https://cdn.bootcss.com/devicons/1.8.0/css/devicons.min.css" rel="stylesheet"> -->
     <link href="https://cdn.bootcss.com/material-design-lite/1.1.1/material.min.css" rel="stylesheet">
     <link href="{{ static_url('app.css') }}" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
@@ -52,14 +51,14 @@
     {% end %}
   </header>
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Python 头条</span>
+    <a href="/" class="mdl-layout-title">{{title}} - Python头条</span>
     <nav class="mdl-navigation">
-          {% if not uid %}
-          <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
-          {% else %}
-          <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
-          <a class="mdl-navigation__link" href='/logout'>登出</a>
-          {% end %}
+      {% if not uid %}
+      <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
+      {% else %}
+      <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
+      <a class="mdl-navigation__link" href='/logout'>登出</a>
+      {% end %}
     </nav>
   </div>
   <main class="mdl-layout__content">
@@ -81,7 +80,6 @@
   var snackbarContainer = document.querySelector('#login-toast');
   var showToastButton = document.querySelector('#add');
   window.toast = function (msg) {
-      // alert(msg || '请先登录！')
     var data = {message: msg || '请先登录！'};
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
   }
