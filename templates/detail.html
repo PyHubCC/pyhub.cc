@@ -51,6 +51,9 @@
           </div>
         </div>
       </div>
+      <div class="mdl-card__menu" show={ is_promoted() }>
+          <img src="/static/imgs/promotion.gif" style="width: 70px;"/>
+      </div>
       this.link = opts.link;
       var tmp_date = this.link.date.toString();
       this.date = tmp_date.indexOf('-') == -1 ? ((new Date(tmp_date*1000)).toLocaleDateString()) : tmp_date;
@@ -77,6 +80,9 @@
             self.update();
           })
         };
+      }
+      this.is_promoted = function () {
+        return !(this.link.promoted === undefined || !this.link.promoted);
       }
       this.is_faved = function() {
         return this.link.favlist === undefined || this.link.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
