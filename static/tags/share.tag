@@ -38,7 +38,7 @@
             </div>
             <div class="mdl-card__menu" show={ admin }>
               <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick={ promote }>
-                <i class="material-icons">{ is_promoted() ? 'star_border' : 'star'}</i>
+                <i class="material-icons">{ is_promoted() ? 'star' : 'star_border'}</i>
               </button>
               <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick={ unpublic }>
                 <i class="material-icons">delete</i>
@@ -84,7 +84,7 @@
     return this.favlist === undefined || this.favlist.indexOf(opts.uid) == -1 ? 'favorite_border' : 'favorite';
   }
   this.is_promoted = function () {
-    return this.promoted === undefined || !this.promoted;
+    return !(this.promoted === undefined || !this.promoted);
   }
   this.load_more = function(e){
     var self = this;
