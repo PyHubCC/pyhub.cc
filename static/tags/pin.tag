@@ -61,9 +61,8 @@
     };
     this.admin = opts.admin;
     this.loading = false;
-    this.current_date = new Date();
+    this.current_date = new Date(opts.today*1000);
     this.chunks = [{items: opts.links, date: this.current_date.fmt(), hr: false}]
-    console.log(this.chunks);
     this.vote = function(e){
       if (opts.uid === undefined) {
         toast();
@@ -109,7 +108,6 @@
       });
     }
     this.promote = function (e) {
-      
     }
   </script>
 </pin>

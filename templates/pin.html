@@ -10,6 +10,7 @@ riot.mount('pin', {
     links: {% raw json %},
     admin: {{ admin }},
     uid: {% if uid %} '{{uid}}' {% else %} undefined {% end %},
+    today: {{ today }},
     toast: window.toast,
 })
 </script>

@@ -78,6 +78,7 @@ class HomeHandler(BaseController):
             users=self.json_encode(users),
             topic_metas = self.json_encode(topic_metas),
             page = tab,
+            today = self.application.db.time_int,
         )
 
         links = []
