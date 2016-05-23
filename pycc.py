@@ -29,6 +29,7 @@ class Application(BaseApplication):
             (r'/more_pin/(\S+)', MorePinHandler),
             (r'/web_hook/coding_git', WebHookHandler),
             (r'/web_hook/github_push', WebHookHandler),
+            (r'/web_hook/bitbucket_push', WebHookHandler),
             (r'/oauth/github', OAuthGitHubHandler),
             (r'/act/(\w+)', FavHandler),
             (r'/admin', AdminController),

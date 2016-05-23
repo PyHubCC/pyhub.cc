@@ -21,6 +21,8 @@ class WebHookHandler(BaseController):
 
             print("Execute git pull github master")
             subprocess.call("git pull github master", shell=True)
+        elif self.request.headers.get('X-Event-Key') == 'repo:push':
+            subprocess.call("git pull bitbucket master", shell=True)
         else:
             print(self.request.headers.get('X-Coding-Event'))
             self.write("Bye")
