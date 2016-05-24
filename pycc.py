@@ -6,7 +6,7 @@ from tornado.options import define, options
 from base import BaseApplication
 
 from controller import BaseController
-from controller.helper import JSONEncoder
+from controller.helper import JSONEncoder, parse
 from controller.api import APIPost, MsgPost, WebHookHandler, CommentAPI, FavHandler, APIPoints
 from controller.admin import AdminController
 import re
@@ -46,6 +46,7 @@ class HomeHandler(BaseController):
     def fake_login(self):
         self.set_secure_cookie('nick', 'Yushneng')
         self.set_secure_cookie('uid', 'rainyear')
+        self.set_secure_cookie('avatar', '//avatars.githubusercontent.com/u/3953966?v=3')
 
     async def get(self, tab):
         if options.env == 'dev':
@@ -222,10 +223,14 @@ class NewHandler(BaseController):
         title = re.sub(r'\s', ' ', self.get_body_argument('title'))
         abstract = re.sub(r'\s', ' ', self.get_body_argument('abstract'))
 
-        if len(link)*len(title)*len(abstract) == 0:
-            self.write(JSONEncoder().encode({'status': 0}))
-        else:
-            data = self.make_link(dict(
+        if len(title)*len(abstract) == 0:
+            data = parse(link, title, abstract)
+            if not isinstance(data, dict):
+                self.write(JSONEncoder().encode({'status': 0, 'msg': data}))
+                return
+            title = data.get('title')
+            abstract = data.get('abstract')
+        data = self.make_link(dict(
                 link = link,
                 title = title,
                 abstract = abstract,
@@ -233,11 +238,11 @@ class NewHandler(BaseController):
                 via_uid = self.get_secure_cookie('uid').decode(),
                 via_avatar = self.get_secure_cookie('avatar').decode(),
             ))
-            success = await self.application.db.save_link(data)
-            if not success:
-                self.write(JSONEncoder().encode({'status': 302, 'msg': 'existed!'}))
-            else:
-                self.write(JSONEncoder().encode({'status': 200, 'link': link}))
+        success = await self.application.db.save_link(data)
+        if not success:
+            self.write(JSONEncoder().encode({'status': 302, 'msg': 'existed!'}))
+        else:
+            self.write(JSONEncoder().encode({'status': 200, 'link': link}))
 
 # '/topic/slug' => topic page
 class TopicHandler(BaseController):

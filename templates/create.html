@@ -28,11 +28,11 @@
                 <label class="mdl-textfield__label" for="input_link">Link...<label>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="input_title" name="input_title" required>
+                <input class="mdl-textfield__input" type="text" id="input_title" name="input_title" >
                 <label class="mdl-textfield__label" for="input_title">Title...<label>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <textarea class="mdl-textfield__input" type="text" rows="3" id="input_abstract" name="input_abstract" required></textarea>
+                <textarea class="mdl-textfield__input" type="text" rows="3" id="input_abstract" name="input_abstract" ></textarea>
                 <label class="mdl-textfield__label" for="input_abstract">Abstract...</label>
               </div>
             </form>
@@ -80,6 +80,8 @@
             alert("请输入正确的链接！");
             return;
           }
+          /*
+          // title & abstract can be empty
           if (abstract.length == 0 || abstract.length >= 140){
             alert("摘要字数限制 0~140！");
             return;
@@ -87,6 +89,7 @@
           if (title.length == 0 || title.length >= 140) {
             alert("标题字数限制 0~140！");
           }
+          */
             this.loading = true;
             var self = this;
             $.post('/new', {link: link, title: title, abstract: abstract}, function(json){
@@ -101,7 +104,7 @@
                 alert("链接已存在，请勿重复提交！");
                 self.clear(e);
               }else{
-                alert("出现错误，请稍后再试！");
+                alert(json.msg);
                 self.loading = false;
                 self.update();
               }
