@@ -22,6 +22,11 @@
         <div id="qrcode">
           <img src=""/>
         </div>
+        <hr/>
+        <p>分享到新浪微博：</p>
+        <div>
+          <wb:share-button appkey="3917419137" addition="simple" type="button" ralateUid="5930218982" pic="http%3A%2F%2Fww1.sinaimg.cn%2Fmw690%2F006tkARggw1f47twpzuizj30h80ant99.jpg" title="{{link['title']}}" url="https://pyhub.cc/py/{{link['_id']}}"></wb:share-button>
+        </div>
       </div>
     </div>
     <!-- end wechat box -->
@@ -164,6 +169,7 @@
   <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
   <script type="riot/tag" src="{{ static_url('tags/footer.tag') }}" ></script>
   <script src="{{ static_url('riot+compiler.min.js') }}" ></script>
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
   <script>
     (function () {
       $('#qrcode').qrcode({width: 200, height: 200, text: window.location.href});
