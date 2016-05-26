@@ -39,6 +39,7 @@
           <i class="material-icons">add</i>
         </button>
           {% if not uid %}
+          <a class="mdl-navigation__link" href="https://api.weibo.com/2/oauth2/authorize?client_id=3917419137&response_type=token&display=js&transport=html5"><img src="http://img.t.sinajs.cn/t4/appstyle/open/images/website/loginbtn/loginbtn_04.png"/></a>
           <a class="mdl-navigation__link" href="{{ login_url }}">GitHub 登录</a>
           {% else %}
           <a class="mdl-navigation__link" href="/u/{{ uid }}">{{ nick }}</a>
