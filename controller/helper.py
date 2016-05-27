@@ -44,6 +44,7 @@ class GitHub(object):
         return res.json()
 
 def parse(url='', title='', abstract=''):
+    print(url)
     try:
         header = {'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1)'
                                  'AppleWebKit/537.36 (KHTML, like Gecko)'
@@ -86,5 +87,5 @@ def parse(url='', title='', abstract=''):
             link  = url,
             abstract = abstract,
         )
-    except:
+    except TypeError:
         return "Catch other error!"

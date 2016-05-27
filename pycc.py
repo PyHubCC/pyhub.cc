@@ -9,6 +9,7 @@ from controller import BaseController
 from controller.helper import JSONEncoder, parse
 from controller.api import APIPost, MsgPost, WebHookHandler, CommentAPI, FavHandler, APIPoints
 from controller.admin import AdminController
+from controller.daily import DailyBot
 import re
 
 
@@ -38,7 +39,8 @@ class Application(BaseApplication):
             (r'/api/v1/post_data', APIPost),
             (r'/api/v1/msg', MsgPost),
             (r'/api/v1/comment/(\w*)', CommentAPI),
-            (r'/api/v1/points', APIPoints)
+            (r'/api/v1/points', APIPoints),
+            (r'/bot/daily_parse', DailyBot)
         ]
         super(Application, self).__init__(handlers)
 # '/' => Home page
